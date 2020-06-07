@@ -23,6 +23,18 @@ html {
 body {
   font-size: 1rem;
   overflow-x: hidden;
+  padding: $common-margin;
+  display: flex;
+  flex-direction: column;
+}
+
+body>hr {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.noscroll {
+  overflow-y: hidden;
 }
 
 button {
@@ -36,8 +48,16 @@ button {
   background-color: $button-color;
   line-height: 0;
 
-  &:hover {
+  &:not([disabled]):hover {
     background-color: $button-hover-color;
+  }
+  &[disabled]{
+    cursor: not-allowed;
+  }
+
+  // Removes dotted border around focused buttons
+  &::-moz-focus-inner {
+    border: 0;
   }
 
   svg {
