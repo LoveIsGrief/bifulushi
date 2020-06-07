@@ -1,0 +1,26 @@
+.test:
+  stage: test
+  before_script:
+    # Install deps
+    - npm ci
+  script:
+    - npm run build
+
+stages:
+  - test
+
+unit_test_lts:
+  extends: .tests
+  image: "node:lts"
+
+unit_test_erbium:
+  extends: .tests
+  image: "node:erbium"
+
+unit_test_dubnium:
+  extends: .tests
+  image: "node:dubnium"
+
+unit_test_carbon:
+  extends: .tests
+  image: "node:carbon"
