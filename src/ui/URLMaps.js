@@ -97,7 +97,7 @@ class URLMaps {
 
     await HostStorage.setAll(maps);
     hideLoader();
-    showToast('Saved!');
+    showToast('Saved!', 3000);
     setTimeout(() => hideToast(), 3000);
   }
 

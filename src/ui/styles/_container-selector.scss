@@ -1,12 +1,44 @@
 @import "variables";
 
-.container-selector {
-  margin: 0.6rem 1rem 0 1rem;
+$actions-height: 80px;
+$top-height: 50px;
+$bottom-height: 30px;
+
+.main-header {
+  height: $actions-height;
   position: relative;
+
+  %division {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      justify-content: space-between;
+    }
+
+    .top {
+      @extend %division;
+      height: $top-height;
+    }
+
+    .bottom {
+      @extend %division;
+      height: $bottom-height;
+      button {
+        $height: 15px;
+        font-size: $height;
+        line-height: $height;
+      }
+    }
+
+}
+
+.container-selector {
+  flex-grow: 1;
 }
 
 .container-selector-item {
-  padding: 0.6rem;
+  padding: 0.3rem 0.6rem;
   cursor: pointer;
 
   > span {
@@ -40,7 +72,6 @@
   background-size: 9px 6px;
   cursor: pointer;
   border-bottom: 1px solid $border-color;
-  padding-bottom: 0.6rem;
 
   .container-selector-item {
     &:hover {
@@ -55,7 +86,7 @@
   transition: max-height 0.25s ease;
   border: 1px solid $border-color;
   background-color: $white;
-  top: 3.4rem;
+  top: 2.8rem;
   left: 0;
   right: 0;
   position: absolute;
@@ -64,7 +95,8 @@
 
   &.collapsed {
     max-height: 0;
-    border-color: transparent;
+    border: 0;
     box-shadow: none;
+    overflow: hidden;
   }
 }
