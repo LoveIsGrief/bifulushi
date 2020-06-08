@@ -39,10 +39,6 @@ unit_test:dubnium:
   <<: *tests
   image: "node:dubnium"
 
-unit_test:carbon:
-  <<: *tests
-  image: "node:carbon"
-
 ##############
 # Audits
 
@@ -62,9 +58,3 @@ audit:dubnium:
   image: "node:dubnium"
   dependencies:
     - "unit_test:dubnium"
-
-audit:carbon:
-  <<: *audit
-  image: "node:carbon"
-  dependencies:
-    - "unit_test:carbon"
