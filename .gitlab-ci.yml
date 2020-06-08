@@ -1,5 +1,6 @@
 stages:
   - npm_install
+  - lint
   - test
   - audit
   - build
@@ -13,9 +14,9 @@ stages:
 
 .lint: &lint
   <<: *base
-  stage: audit
+  stage: lint
   script:
-    - npm audit
+    - npm run lint
 
 .tests: &tests
   <<: *base
