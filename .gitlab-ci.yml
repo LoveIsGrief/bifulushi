@@ -19,6 +19,11 @@ stages:
 .audit: &audit
   stage: audit
   image: "node:lts"
+  before_script:
+    # Install deps
+    - npm ci --cache .npm --prefer-offline
+  script:
+    - npm audit
 
 ##############
 # Unit tests
