@@ -1,29 +1,84 @@
 stages:
+  - npm_install
   - test
   - audit
+  - build
 
 # Bases
-.tests: &tests
-  stage: test
-  script:
-    - npm run test
+.base: &base
   image: "node:lts"
   before_script:
     # Install deps
+    - npm ci --cache .npm --prefer-offline
+
+.lint: &lint
+  <<: *base
+  stage: audit
+  script:
+    - npm audit
+
+.tests: &tests
+  <<: *base
+  stage: test
+  script:
+    - npm run test
+
+.audit: &audit
+  <<: *base
+  stage: audit
+  script:
+    - npm audit
+
+.build: &build
+  <<: *base
+  stage: build
+  script:
+    - npm run build
+    - npm run post-build
+
+.install: &install
+  stage: npm_install
+  image: "node:lts"
+  script:
     - npm ci --cache .npm --prefer-offline
   artifacts:
     paths:
       - node_modules
       - .npm
 
-.audit: &audit
-  stage: audit
-  image: "node:lts"
-  before_script:
-    # Install deps
-    - npm ci --cache .npm --prefer-offline
-  script:
-    - npm audit
+##############
+# Install and cache artifacts
+
+npm_install:
+  <<: *install
+
+npm_install:erbium:
+  <<: *install
+  image: "node:erbium"
+
+npm_install:dubnium:
+  <<: *install
+  image: "node:dubnium"
+
+##############
+# Lint
+
+lint:
+  <<: *lint
+  dependencies:
+    - npm_install
+
+lint:erbium:
+  <<: *lint
+  image: "node:erbium"
+  dependencies:
+    - "npm_install:erbium"
+
+lint:dubnium:
+  <<: *lint
+  image: "node:dubnium"
+  dependencies:
+    - "npm_install:dubnium"
 
 ##############
 # Unit tests
@@ -45,16 +100,36 @@ unit_test:dubnium:
 audit:
   <<: *audit
   dependencies:
-    - unit_test
+    - npm_install
 
 audit:erbium:
   <<: *audit
   image: "node:erbium"
   dependencies:
-    - "unit_test:erbium"
+    - "npm_install:erbium"
 
 audit:dubnium:
   <<: *audit
   image: "node:dubnium"
   dependencies:
-    - "unit_test:dubnium"
+    - "npm_install:dubnium"
+
+##############
+# Audits
+
+build:
+  <<: *build
+  dependencies:
+    - npm_install
+
+build:erbium:
+  <<: *build
+  image: "node:erbium"
+  dependencies:
+    - "npm_install:erbium"
+
+build:dubnium:
+  <<: *build
+  image: "node:dubnium"
+  dependencies:
+    - "npm_install:dubnium"
