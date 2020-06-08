@@ -1,26 +1,65 @@
-.tests:
-  stage: test
-  before_script:
-    # Install deps
-    - npm ci
-  script:
-    - npm run build
-
 stages:
   - test
+  - audit
 
-unit_test_lts:
-  extends: .tests
+# Bases
+.tests: &tests
+  stage: test
+  script:
+    - npm run test
+  image: "node:lts"
+  before_script:
+    # Install deps
+    - npm ci --cache .npm --prefer-offline
+  artifacts:
+    paths:
+      - node_modules
+      - .npm
+
+.audit: &audit
+  stage: audit
   image: "node:lts"
 
-unit_test_erbium:
-  extends: .tests
+##############
+# Unit tests
+
+unit_test:
+  <<: *tests
+
+unit_test:erbium:
+  <<: *tests
   image: "node:erbium"
 
-unit_test_dubnium:
-  extends: .tests
+unit_test:dubnium:
+  <<: *tests
   image: "node:dubnium"
 
-unit_test_carbon:
-  extends: .tests
+unit_test:carbon:
+  <<: *tests
   image: "node:carbon"
+
+##############
+# Audits
+
+audit:
+  <<: *audit
+  dependencies:
+    - unit_test
+
+audit:erbium:
+  <<: *audit
+  image: "node:erbium"
+  dependencies:
+    - "unit_test:erbium"
+
+audit:dubnium:
+  <<: *audit
+  image: "node:dubnium"
+  dependencies:
+    - "unit_test:dubnium"
+
+audit:carbon:
+  <<: *audit
+  image: "node:carbon"
+  dependencies:
+    - "unit_test:carbon"
