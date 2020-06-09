@@ -4,7 +4,7 @@ import PreferenceStorage from '../Storage/PreferenceStorage';
 import Tabs from '../Tabs';
 import {qs, qsAll} from '../utils';
 import {showLoader, hideLoader} from './loader';
-import {showToast, hideToast} from './toast';
+import {showToast} from './toast';
 import {cleanHostInput} from '../utils';
 
 const addButton = qs('.add-button');
