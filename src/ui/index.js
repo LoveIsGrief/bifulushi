@@ -2,8 +2,9 @@ import './styles/style.scss';
 import './index.html';
 import State from '../State';
 import ContextualIdentity, {NO_CONTAINER} from '../ContextualIdentity';
-import Storage from '../Storage';
+import HostStorage from '../Storage/HostStorage';
 import Tabs from '../Tabs';
+import './actions';
 import './ContainerSelector';
 import './URLMaps';
 import './CSVEditor';
@@ -17,12 +18,21 @@ State.setState({
 const getIdentities = () => {
   ContextualIdentity.getAll().then((identities) => {
     State.set('identities', identities);
-    State.set('selectedIdentity', identities[0]);
+
+    // The selectedIdentity might not exist anymore
+    //  or may have completely changed
+    let selectedIdentity = identities[0];
+    if(State.state.selectedIdentity){
+      selectedIdentity = identities.find((identity) => {
+        return identity.cookieStoreId === State.state.selectedIdentity.cookieStoreId;
+      }) || selectedIdentity;
+    }
+    State.set('selectedIdentity', selectedIdentity);
   });
 };
 
 const getUrlMaps = () => {
-  Storage.getAll().then((urlMaps) => {
+  HostStorage.getAll().then((urlMaps) => {
     State.set('urlMaps', urlMaps);
   });
 };
@@ -34,7 +44,7 @@ ContextualIdentity.addOnChangedListener(() => {
   getIdentities();
 });
 
-Storage.addOnChangedListener(() => {
+HostStorage.addOnChangedListener(() => {
   getUrlMaps();
 });
 

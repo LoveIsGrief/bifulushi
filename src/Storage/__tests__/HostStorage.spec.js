@@ -1,6 +1,6 @@
-describe('Storage', () => {
+describe('HostStorage', () => {
 
-  let Storage;
+  let HostStorage;
 
   beforeEach(() => {
     global.browser = {
@@ -42,7 +42,7 @@ describe('Storage', () => {
             }),
           )),
 
-          set: jest.fn((key, value) => new Promise((resolve) => resolve({key, value}))),
+          set: jest.fn((keys) => new Promise((resolve) => resolve(keys))),
 
           remove: jest.fn((key) => new Promise((resolve) => resolve({key}))),
 
@@ -56,12 +56,12 @@ describe('Storage', () => {
       },
     };
 
-    Storage = require('../index').default;
+    HostStorage = require('../HostStorage').default;
   });
 
   it('should get all host maps', () => {
     expect.assertions(1);
-    return Storage.getAll().then((results) => {
+    return HostStorage.getAll().then((results) => {
       expect(results).toEqual({
         'example.com': {
           host: 'example.com',
@@ -99,56 +99,56 @@ describe('Storage', () => {
 
   it('should get by key', () => {
     expect.assertions(8);
-    Storage.get('http://example.com').then((result) => {
+    HostStorage.get('http://example.com').then((result) => {
       expect(result).toEqual({
         host: 'example.com',
         container: 'example',
         enabled: true,
       });
     });
-    Storage.get('http://kinte.sh').then((result) => {
+    HostStorage.get('http://kinte.sh').then((result) => {
       expect(result).toEqual({
         host: 'kinte.sh/*',
         container: 'personal',
         enabled: true,
       });
     });
-    Storage.get('http://test.example.com').then((result) => {
+    HostStorage.get('http://test.example.com').then((result) => {
       expect(result).toEqual({
         host: '*.example.com',
         container: 'example',
         enabled: true,
       });
     });
-    Storage.get('http://test.kinte.sh').then((result) => {
+    HostStorage.get('http://test.kinte.sh').then((result) => {
       expect(result).toEqual({
         host: '*.kinte.sh/*',
         container: 'personal',
         enabled: true,
       });
     });
-    Storage.get('http://test.example.com/test').then((result) => {
+    HostStorage.get('http://test.example.com/test').then((result) => {
       expect(result).toEqual({
         host: '*.example.com',
         container: 'example',
         enabled: true,
       });
     });
-    Storage.get('http://test.kinte.sh/test').then((result) => {
+    HostStorage.get('http://test.kinte.sh/test').then((result) => {
       expect(result).toEqual({
         host: '*.kinte.sh/*',
         container: 'personal',
         enabled: true,
       });
     });
-    Storage.get('http://test.example.com/here').then((result) => {
+    HostStorage.get('http://test.example.com/here').then((result) => {
       expect(result).toEqual({
         host: 'test.example.com/here',
         container: 'example',
         enabled: true,
       });
     });
-    return Storage.get('http://test.kinte.sh/here/there').then((result) => {
+    return HostStorage.get('http://test.kinte.sh/here/there').then((result) => {
       expect(result).toEqual({
         host: 'test.kinte.sh/here',
         container: 'personal',
@@ -172,8 +172,8 @@ describe('Storage', () => {
     };
 
     expect.assertions(1);
-    return Storage.setAll(hostMaps).then(({key}) => {
-      expect(key).toEqual({
+    return HostStorage.setAll(hostMaps).then((keysO) => {
+      expect(keysO).toEqual({
         'map=example.com': {
           host: 'example.com',
           container: 'example',
@@ -195,10 +195,12 @@ describe('Storage', () => {
       enabled: true,
     };
 
-    expect.assertions(2);
-    return Storage.set(hostMap).then(({key, value}) => {
-      expect(key).toEqual('map=example.com');
-      expect(value).toEqual({
+    expect.assertions(3);
+    return HostStorage.set(hostMap).then((keysO) => {
+      const keys = Object.keys(keysO);
+      expect(keys.length).toEqual(1);
+      expect(keys[0]).toEqual('map=example.com');
+      expect(keysO[keys[0]]).toEqual({
         host: 'example.com',
         container: 'example',
         enabled: true,
@@ -208,22 +210,16 @@ describe('Storage', () => {
 
   it('should remove one entry', () => {
     expect.assertions(1);
-    return Storage.remove('example.com').then(({key}) => {
-      expect(key).toEqual('map=example.com');
+    return HostStorage.remove('example.com').then(({key}) => {
+      expect(key).toEqual(['map=example.com']);
     });
   });
 
   it('should clear the storage', () => {
     expect.assertions(1);
-    return Storage.clear().then((result) => {
+    return HostStorage.clear().then((result) => {
       expect(result).toBeUndefined();
     });
-  });
-
-  it('should add onChanged listener', () => {
-    const MOCK_FN = jest.fn();
-    Storage.addOnChangedListener(MOCK_FN);
-    expect(global.browser.storage.onChanged.addListener).toBeCalledWith(MOCK_FN);
   });
 
 });

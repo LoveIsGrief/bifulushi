@@ -1,13 +1,13 @@
+import ContextualIdentities from '../ContextualIdentity';
 import State from '../State';
-import Storage from '../Storage';
-import {qs} from '../utils';
-import {showLoader, hideLoader} from './loader';
-import {showToast, hideToast} from './toast';
-import {cleanHostInput} from '../utils';
+import Storage from '../Storage/HostStorage';
+import {makeActionSelectedTrigger} from './actions/utils';
+import {cleanHostInput, qs} from '../utils';
+import {hideLoader, showLoader} from './loader';
+import {showToast} from './toast';
+import PreferenceStorage from '../Storage/PreferenceStorage';
 
 const HOST_MAPS_SPLIT_KEY = ',';
-const COLORS = ['blue', 'turquoise', 'green', 'yellow', 'orange', 'red', 'pink', 'purple'];
-const csvEditor = qs('.csv-editor');
 const openButton = qs('.ce-open-button');
 const closeButton = qs('.ce-close-button');
 const saveButton = qs('.ce-save-button');
@@ -18,8 +18,9 @@ class CSVEditor {
   constructor(state) {
     this.state = state;
     State.addListener(this.update.bind(this));
-    openButton.addEventListener('click', this.showEditor.bind(this));
-    closeButton.addEventListener('click', this.hideEditor.bind(this));
+
+    makeActionSelectedTrigger(openButton, 'csv-editor');
+    makeActionSelectedTrigger(closeButton);
     saveButton.addEventListener('click', this.saveUrlMaps.bind(this));
     this.render();
   }
@@ -32,7 +33,7 @@ class CSVEditor {
   render() {
     showLoader();
 
-    if(!this.state.urlMaps || !this.state.identities) {
+    if (!this.state.urlMaps || !this.state.identities) {
       return false;
     }
 
@@ -57,10 +58,8 @@ class CSVEditor {
 
   async createMissingContainers(missingContainers, maps) {
     for (const containerName of missingContainers.keys()) {
-      const identity = await browser.contextualIdentities.create({
+      const identity = await ContextualIdentities.create({
         name: containerName,
-        color: COLORS[Math.floor(Math.random() * COLORS.length)],
-        icon: 'circle',
       });
       for (const host of missingContainers.get(containerName)) {
         this.addIdentity(identity, host, maps);
@@ -74,14 +73,22 @@ class CSVEditor {
     const maps = {};
     const missingContainers = new Map();
 
-    Promise.all(items.map((item) => {
+    const caseSensitiveMatch = PreferenceStorage.get('caseSensitiveMatch', true);
+
+    await Promise.all(items.map((item) => {
       const hostMapParts = item.split(HOST_MAPS_SPLIT_KEY);
-      const host = cleanHostInput(hostMapParts.slice(0, -1).join(HOST_MAPS_SPLIT_KEY));
+      const host = cleanHostInput(
+        hostMapParts.slice(0, -1).join(HOST_MAPS_SPLIT_KEY),
+        caseSensitiveMatch
+      );
       const containerName = hostMapParts[hostMapParts.length - 1];
       let identity;
 
       if (host && containerName) {
-        identity = this.state.identities.find((identity) => cleanHostInput(identity.name) === cleanHostInput(containerName));
+        identity = this.state.identities.find((identity) => {
+          return cleanHostInput(identity.name, caseSensitiveMatch)
+              === cleanHostInput(containerName, caseSensitiveMatch);
+        });
         if (!identity) {
           const trimmedContainer = containerName.trim();
           if (!missingContainers.has(trimmedContainer)) {
@@ -97,22 +104,11 @@ class CSVEditor {
 
     await this.createMissingContainers(missingContainers, maps);
 
-    Promise.all([
-      Storage.clear(),
-      Storage.setAll(maps),
-    ]).then(() => {
-      hideLoader();
-      showToast('Saved!');
-      setTimeout(() => hideToast(), 3000);
-    });
-  }
+    await Storage.clear();
+    await Storage.setAll(maps);
 
-  showEditor() {
-    csvEditor.classList.remove('hide');
-  }
-
-  hideEditor() {
-    csvEditor.classList.add('hide');
+    hideLoader();
+    showToast('Saved!', 3000);
   }
 
 }

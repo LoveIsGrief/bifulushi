@@ -1,12 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 
   entry: {
     index: './src/index.js',
-    ui: ['./src/ui/index.js'],
+    'ui/index': ['./src/ui/index.js'],
+    'ui-preferences/index': ['./src/ui-preferences/index.js'],
   },
 
   output: {
@@ -26,7 +27,8 @@ module.exports = {
         },
       },
       {
-        test: /\.json/,
+        test: /manifest\.(json)$/,
+        type: 'javascript/auto',
         use: [
           {
             loader: 'file-loader',
@@ -37,39 +39,67 @@ module.exports = {
         ],
       },
       {
-        test: /\.html$/,
+        test: /icons\/.*$/,
+        type: 'javascript/auto',
         use: [
           {
             loader: 'file-loader',
             options: {
-              name: '[name].[ext]',
+              name: 'icons/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(html)$/,
+        type: 'javascript/auto',
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[folder]/[name].[ext]',
+            },
+          },
+        ],
+      },
+      {
+        test: /docs\/.+\.(md)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[path]/[name].html',
+            },
+          }, {
+            loader: 'markdown-it-vanilla-loader',
+            options: {
+              plugins: [
+                'markdown-it-anchor',
+                'markdown-it-table-of-contents',
+              ],
             },
           },
         ],
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader',
-            },
-            {
-              loader: 'sass-loader',
-            },
-          ],
-          fallback: 'style-loader',
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ],
       },
     ],
   },
 
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
-    new ExtractTextPlugin({
-      filename: 'style.css',
-      disable: false,
-      allChunks: true,
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
     }),
   ],
 

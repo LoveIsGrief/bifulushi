@@ -7,7 +7,18 @@ export const qs = (selector, node) => (node || document).querySelector(selector)
 export const qsAll = (selector, node) => (node || document).querySelectorAll(selector);
 export const ce = (tagName) => document.createElement(tagName);
 
-export const cleanHostInput = (value = '') => value.trim().toLowerCase();
+/**
+ * Makes sure the host coming from user input can be used elsewhere
+ *
+ * @param host {String}
+ * @param caseSensitive {Boolean} Whether the host is case sensitive.
+ *                      Insensitive means it should be lowercased
+ * @return {String}
+ */
+export function cleanHostInput(host = '', caseSensitive=true){
+  host = host.trim();
+  return caseSensitive ? host : host.tolowerCase();
+}
 
 const getDomain = (src = '') => src.split('/')[0];
 const getPath = (src = '') => src.replace(/^.+?\//, '');
@@ -27,13 +38,13 @@ export const sortMaps = (maps) => maps.sort((map1, map2) => {
 export const domainMatch = (url, map) => {
   const url_host = getDomain(url);
   const map_host = getDomain(map);
-  if (map_host.slice(0,2) !== '*.') return url_host === map_host;
+  if (map_host.slice(0, 2) !== '*.') return url_host === map_host;
   // Check wildcard matches in reverse order (com.example.*)
   const wild_url = url_host.split('.').reverse();
   const wild_map = map_host.slice(2).split('.').reverse();
   if (wild_url.length < wild_map.length) return false;
 
-  for (let i = 0; i < wild_map.length ; ++i)
+  for (let i = 0; i < wild_map.length; ++i)
     if (wild_url[i] !== wild_map[i]) return false;
   return true;
 };
@@ -47,14 +58,18 @@ export const pathMatch = (url, map) => {
   const wild_map = map_path.replace('/*', '').split('/');
   if (wild_url.length < wild_map.length) return false;
 
-  for (let i = 0; i < wild_map.length ; ++i)
+  for (let i = 0; i < wild_map.length; ++i)
     if (wild_url[i] !== wild_map[i]) return false;
   return true;
 };
 
+/**
+ *
+ * @param url {URL}
+ * @return {string}
+ */
 export const urlKeyFromUrl = (url) => {
-  const parsedUrl = new window.URL(url);
-  return punycode.toUnicode(parsedUrl.hostname.replace('www.', '')) + parsedUrl.pathname;
+  return punycode.toUnicode(url.hostname.replace('www.', '')) + url.pathname;
 };
 
 /**
@@ -62,27 +77,92 @@ export const urlKeyFromUrl = (url) => {
  *
  * Depending on the prefix in the hostmap it'll choose a match method:
  *  - regex
- *  - TODO: glob
+ *  - glob
  *  - standard
  *
- * @param url {URL}
+ * @param url {String}
+ * @param preferences {Object}
  * @param map
  * @return {*}
  */
-export const matchesSavedMap = (url, map) => {
-    const savedHost = map.host;
-    if (savedHost[0] === PREFIX_REGEX) {
-        return new RegExp(savedHost.substr(1)).test(url);
-    } else if (savedHost[0] === PREFIX_GLOB) {
-        // turning glob into regex isn't the worst thing:
-        // 1. * becomes .*
-        // 2. ? becomes .?
-        return new RegExp(savedHost.substr(1).replace(/\*/g, '.*').replace(/\?/g, '.?')).test(url);
-    } else {
-        const key = urlKeyFromUrl(url);
-        const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
-        const mapHost = ((map.host.indexOf('/') === -1) ? map.host.concat('/') : map.host).toLowerCase();
-        return domainMatch(_url, mapHost) && pathMatch(_url, mapHost);
+export const matchesSavedMap = (url, preferences, {host}) => {
+  let toMatch = url;
+  let urlO = new window.URL(url);
+  const{matchDomainOnly, caseSensitiveMatch} = preferences;
+  if(!caseSensitiveMatch){
+    host = host.toLowerCase();
+    toMatch = toMatch.toLowerCase();
+  }
+  if (matchDomainOnly) {
+    toMatch = urlO.host;
+    urlO = new window.URL(`${urlO.protocol}//${urlO.host}`);
+  }
 
+  if (host[0] === PREFIX_REGEX) {
+    const regex = host.substr(1);
+    try {
+      return new RegExp(regex).test(toMatch);
+    } catch (e) {
+      console.error('couldn\'t test regex', regex, e);
     }
+  } else if (host[0] === PREFIX_GLOB) {
+    // turning glob into regex isn't the worst thing:
+    // 1. * becomes .*
+    // 2. ? becomes .?
+    return new RegExp(host.substr(1)
+        .replace(/\*/g, '.*')
+        .replace(/\?/g, '.?'))
+        .test(toMatch);
+  } else {
+    const key = urlKeyFromUrl(urlO);
+    const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
+    const mapHost = ((host.indexOf('/') === -1) ? host.concat('/') : host).toLowerCase();
+    return domainMatch(_url, mapHost) && pathMatch(_url, mapHost);
+
+  }
 };
+
+
+export const filterByKey = (dict, func) => {
+  return Object.keys(dict)
+      .filter(func)
+      .reduce((acc, curr) => {
+        acc[curr] = dict[curr];
+        return acc;
+      }, {});
+};
+
+/**
+ * Replaces occurrences of {variable} in strings
+ *
+ * It handles camelCase, kebab-case and snake_case variable names
+ *
+ * @param string {String}
+ * @param context {Object}
+ * @throws Error when the variable doesn't exist in the context
+ * @return {String}
+ */
+export function formatString(string, context) {
+  return string.replace(/(\{([\w_-]+)\})/g, (match, _, token) => {
+    const replacement = context[token];
+    if (replacement === undefined) {
+      throw `Cannot find variable '${token}' in context`;
+    }
+    return replacement;
+  });
+}
+
+const IPV4_REGEX = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/;
+
+/**
+ * Naive test if a string looks like an IPv4.
+ *
+ * Should be called after firefox has done the validity check for IPv4.
+ * We can then be sure that it's an IPv4 or not.
+ *
+ * @param string {String}
+ * @return {Boolean}
+ */
+export function looksLikeIPv4(string) {
+  return !!string.match(IPV4_REGEX);
+}

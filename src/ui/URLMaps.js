@@ -1,5 +1,7 @@
 import State from '../State';
-import Storage from '../Storage';
+import HostStorage from '../Storage/HostStorage';
+import PreferenceStorage from '../Storage/PreferenceStorage';
+import Tabs from '../Tabs';
 import {qs, qsAll} from '../utils';
 import {showLoader, hideLoader} from './loader';
 import {showToast, hideToast} from './toast';
@@ -45,10 +47,22 @@ class URLMaps {
     hideLoader();
   }
 
-  addItem(host) {
+  async addItem(host) {
     const item = umItem.cloneNode(true);
     item.setAttribute('data-id', String(this.itemsCount));
     item.classList.remove('template');
+    if(!host){
+      // Fallback to hostname of current tab
+      try {
+        let currentTab = (await Tabs.query({
+          active: true,
+          windowId: browser.windows.WINDOW_ID_CURRENT,
+        }))[0];
+        host = new URL(currentTab.url).hostname;
+      } catch (e) {
+        // console.warn("Error while guessing hostname of active tab", e);
+      }
+    }
     let urlInput = qs('.url-input', item);
     urlInput.setAttribute('old-host', host);
     urlInput.value = host;
@@ -59,18 +73,20 @@ class URLMaps {
 
   removeUrlMap(rowId, host) {
     umMaps.removeChild(qs(`[data-id='${String(rowId)}']`));
-    Storage.remove(host);
+    HostStorage.remove(host);
   }
 
-  saveUrlMaps() {
+  async saveUrlMaps() {
     showLoader();
     const items = qsAll('.url-map-item');
     const maps = {};
     let hostsToRemove = [];
 
+    const caseSensitiveMatch = PreferenceStorage.get('caseSensitiveMatch', true);
+
     for (const item of items) {
       const urlInput = qs('.url-input', item);
-      const host = cleanHostInput(urlInput && urlInput.value);
+      const host = cleanHostInput(urlInput && urlInput.value, caseSensitiveMatch);
 
       if (host) {
         // Get rid of old hosts
@@ -88,16 +104,13 @@ class URLMaps {
     }
 
     const promises = hostsToRemove
-        .map(oldHost => Storage.remove(oldHost))
+        .map(oldHost => HostStorage.remove(oldHost))
         .concat([
-          Storage.setAll(maps),
+          HostStorage.setAll(maps),
         ]);
-
-    Promise.all(promises).then(() => {
-      hideLoader();
-      showToast('Saved!');
-      setTimeout(() => hideToast(), 3000);
-    });
+    await Promise.all(promises);
+    hideLoader();
+    showToast('Saved!', 3000);
   }
 
 }
