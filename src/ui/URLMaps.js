@@ -4,7 +4,7 @@ import PreferenceStorage from '../Storage/PreferenceStorage';
 import Tabs from '../Tabs';
 import {qs, qsAll} from '../utils';
 import {showLoader, hideLoader} from './loader';
-import {showToast, hideToast} from './toast';
+import {showToast} from './toast';
 import {cleanHostInput} from '../utils';
 
 const addButton = qs('.add-button');
@@ -63,7 +63,9 @@ class URLMaps {
         // console.warn("Error while guessing hostname of active tab", e);
       }
     }
-    qs('.url-input', item).value = host;
+    let urlInput = qs('.url-input', item);
+    urlInput.setAttribute('old-host', host);
+    urlInput.value = host;
     qs('.remove-button', item).addEventListener('click', this.removeUrlMap.bind(this, this.itemsCount, host));
     umMaps.appendChild(item);
     this.itemsCount++;
@@ -78,6 +80,7 @@ class URLMaps {
     showLoader();
     const items = qsAll('.url-map-item');
     const maps = {};
+    let hostsToRemove = [];
 
     const caseSensitiveMatch = PreferenceStorage.get('caseSensitiveMatch', true);
 
@@ -86,6 +89,11 @@ class URLMaps {
       const host = cleanHostInput(urlInput && urlInput.value, caseSensitiveMatch);
 
       if (host) {
+        // Get rid of old hosts
+        const oldHost = urlInput.getAttribute('old-host');
+        if (oldHost !== host) {
+          hostsToRemove.push(oldHost);
+        }
         maps[host] = {
           host: host,
           containerName: this.state.selectedIdentity.name,
@@ -95,10 +103,14 @@ class URLMaps {
       }
     }
 
-    await HostStorage.setAll(maps);
+    const promises = hostsToRemove
+        .map(oldHost => HostStorage.remove(oldHost))
+        .concat([
+          HostStorage.setAll(maps),
+        ]);
+    await Promise.all(promises);
     hideLoader();
     showToast('Saved!', 3000);
-    setTimeout(() => hideToast(), 3000);
   }
 
 }
