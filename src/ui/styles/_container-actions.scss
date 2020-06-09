@@ -1,0 +1,44 @@
+@import "variables";
+
+
+.container-action {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: $common-margin;
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: linear-gradient(to bottom, $gradient-top, $gradient-bottom);
+  z-index: 20;
+  transition: transform 0.25s ease;
+  transform: translateX(110%);
+
+  &.active {
+    transform: unset;
+  }
+
+  .top {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: space-around;
+
+    .action-button {
+      line-height: 20px;
+      font-size: 20px;
+    }
+  }
+
+}
+
+@import "actions/create_edit_action";
+@import "actions/delete_action";

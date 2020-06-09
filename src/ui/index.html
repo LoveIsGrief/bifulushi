@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Containerise</title>
+  <title>Bifulushi</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="index.css"/>
 </head>
@@ -14,16 +14,25 @@
 
 <div class="toast hide"></div>
 
-
-<div class="container-selector">
-  <div class="container-selector-selected"></div>
-  <div class="container-selector-list collapsed"></div>
-  <div class="container-selector-item template">
-    <span class="icon"></span>
-    <span class="name"></span>
+<div class="main-header">
+  <div class="top">
+    <div class="container-selector">
+      <div class="container-selector-selected"></div>
+      <div class="container-selector-list collapsed"></div>
+      <div class="container-selector-item template">
+        <span class="icon"></span>
+        <span class="name"></span>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <button class="action-button add" disabled>Add</button>
+    <button class="action-button edit" disabled>Edit</button>
+    <button class="action-button delete" disabled>Delete</button>
   </div>
 </div>
 
+<hr/>
 
 <div class="url-maps">
   <button class="add-button" title="Add new rule">
@@ -53,7 +62,7 @@
 </div>
 
 
-<div class="csv-editor hide">
+<div class="container-action action-csv-editor csv-editor">
   <p>Use this add/remove/backup multiple entries.</p>
   <code>
     e.g. host , container name
@@ -73,6 +82,33 @@
   </button>
 </div>
 
+
+<div class="container-action action-create-edit">
+  <div class="top">
+    <input type="text">
+    <div class="error"></div>
+    <div class="color-selector">
+
+    </div>
+    <div class="icon-selector">
+
+    </div>
+  </div>
+  <div class="bottom">
+    <button class="action-button done" disabled>Done</button>
+    <button class="action-button cancel">Cancel</button>
+  </div>
+</div>
+
+<div class="container-action action-delete">
+  <div class="top">
+    <h1>Sure ?</h1>
+  </div>
+  <div class="bottom">
+    <button class="action-button yes">Yes</button>
+    <button class="action-button no">No</button>
+  </div>
+</div>
 
 <script src="index.js"></script>
 </body>
