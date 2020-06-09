@@ -143,7 +143,7 @@ describe('utils', () => {
       };
     }
 
-    test();
+    describe('without matchDomainOnly', test());
     describe('with matchDomainOnly', test(true));
 
   });
