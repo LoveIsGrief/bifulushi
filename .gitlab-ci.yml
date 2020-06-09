@@ -5,6 +5,12 @@ stages:
   - audit
   - build
 
+# Cache modules in between jobs
+cache:
+  key: "${CI_COMMIT_REF_SLUG}_${CI_JOB_NAME}"
+  paths:
+  - .npm/
+
 # Bases
 .base: &base
   image: "node:lts"
@@ -36,7 +42,6 @@ stages:
   stage: build
   script:
     - npm run build
-    - npm run postbuild
 
 .install: &install
   stage: npm_install
