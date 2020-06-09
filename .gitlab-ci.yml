@@ -27,6 +27,7 @@ stages:
 .audit: &audit
   <<: *base
   stage: audit
+  allow_failure: true
   script:
     - npm audit
 
