@@ -102,7 +102,7 @@ export const matchesSavedMap = (url, preferences, {host}) => {
     let regex = host.substr(1);
     if (matchDomainOnly) {
       // This might generate double ^^ characters, but that works anyway
-      regex = "^" + regex + "$";
+      regex = '^' + regex + '$';
     }
     try {
       return new RegExp(regex).test(toMatch);
@@ -116,9 +116,9 @@ export const matchesSavedMap = (url, preferences, {host}) => {
     // Because the string is regex escaped, you must match \* to instead of *
     let regex = escapeRegExp(host.substr(1))
       .replace(/\\\*/g, '.*')
-      .replace(/\\\?/g, '.?')
+      .replace(/\\\?/g, '.?');
     if (matchDomainOnly) {
-      regex = "^" + regex + "$";
+      regex = '^' + regex + '$';
     }
     return new RegExp(regex).test(toMatch);
   } else {
