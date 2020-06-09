@@ -36,7 +36,7 @@ stages:
   stage: build
   script:
     - npm run build
-    - npm run post-build
+    - npm run postbuild
 
 .install: &install
   stage: npm_install
