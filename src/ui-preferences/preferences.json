@@ -9,7 +9,8 @@
     "type": "bool",
     "name": "matchDomainOnly",
     "label": "Match domain only",
-    "description": "When matching rules to a URL, only use the domain as criteria"
+    "description": "When matching rules to a URL, only use the domain as criteria",
+    "docUrl": "/docs/ui-preferences/matchDomainOnly.html"
   },
   {
     "type": "bool",
