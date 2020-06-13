@@ -20,3 +20,8 @@ The pattern will match the _path_ and the URL will be put into a container.
 **Domain only**
 
 The pattern will **not** match and an attempt at finding another container will be made.
+
+# Warning
+
+You will most likely have to rewrite your patterns when switching the preference!
+Matching behavior **will** change!
