@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/product.schema.json",
+  "title": "matchesSavedMap test config",
+  "type": "object",
+  "additionalProperties": {
+    "type": "object",
+    "description": "Key is group name",
+    "additionalProperties": {
+      "description": "Keys are patterns",
+      "$ref": "#/definitions/patternTestConfig"
+    }
+  },
+  "definitions": {
+    "patternTestConfig": {
+      "properties": {
+        "fullMatch": {
+          "$ref": "#/definitions/urlCollection"
+        },
+        "matchDomainOnly": {
+          "$ref": "#/definitions/urlCollection"
+        }
+      }
+    },
+    "urlCollection": {
+      "type": "object",
+      "description": "URLs that a pattern will be tested against",
+      "properties": {
+        "good": {
+          "description": "URLs that a pattern should match with",
+          "$ref": "#/definitions/urlArray"
+        },
+        "bad": {
+          "description": "URLs that a pattern should NOT match with",
+          "$ref": "#/definitions/urlArray"
+        }
+      }
+    },
+    "urlArray": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

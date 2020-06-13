@@ -99,7 +99,7 @@ export const matchesSavedMap = (url, preferences, {host}) => {
   }
 
   if (host[0] === PREFIX_REGEX) {
-    const regex = host.substr(1);
+    let regex = host.substr(1);
     try {
       return new RegExp(regex).test(toMatch);
     } catch (e) {
@@ -109,10 +109,12 @@ export const matchesSavedMap = (url, preferences, {host}) => {
     // turning glob into regex isn't the worst thing:
     // 1. * becomes .*
     // 2. ? becomes .?
-    return new RegExp(host.substr(1)
-        .replace(/\*/g, '.*')
-        .replace(/\?/g, '.?'))
-        .test(toMatch);
+    // Because the string is regex escaped, you must match \* too instead of *
+    let regex = escapeRegExp(host.substr(1))
+      .replace(/\\\*/g, '.*')
+      .replace(/\\\?/g, '.?');
+    regex = '^' + regex + '$';
+    return new RegExp(regex).test(toMatch);
   } else {
     const key = urlKeyFromUrl(urlO);
     const _url = ((key.indexOf('/') === -1) ? key.concat('/') : key).toLowerCase();
@@ -165,4 +167,14 @@ const IPV4_REGEX = /\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}/;
  */
 export function looksLikeIPv4(string) {
   return !!string.match(IPV4_REGEX);
+}
+
+/**
+ * Escape all regex metacharacters in a string
+ *
+ * @param string {String}
+ */
+function escapeRegExp(string) {
+  // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
+  return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }

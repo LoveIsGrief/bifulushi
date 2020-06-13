@@ -64,63 +64,66 @@ describe('utils', () => {
   });
 
   describe('matchesSavedMap', () => {
-    function test(matchDomainOnly) {
-      matchDomainOnly = !!matchDomainOnly;
-      return () => {
-        describe('without host prefix', () => {
-          it('should match url without path', () => {
-            expect(
-                utils.matchesSavedMap('https://duckduckgo.com', matchDomainOnly, {
-                  host: 'duckduckgo.com',
-                })
-            ).toBe(true);
-          });
-        });
+    function makeMatchesSavedMapTest(pattern, goodUrls, badUrls, matchDomainOnly = false) {
 
-        function testPrefixes(isRegex) {
-          isRegex = !!isRegex;
-          const simplePattern = isRegex?
-              '@duckduckgo\\.com' : '!duckduckgo.com';
-          return () => {
-            it('should match url without path', () => {
-              expect(
-                  utils.matchesSavedMap(
-                      'https://duckduckgo.com',
-                      matchDomainOnly, {
-                        host: simplePattern,
-                      })
-              ).toBe(true);
-            });
-            it('should match url with path', () => {
-              expect(
-                  utils.matchesSavedMap(
-                      'https://duckduckgo.com/?q=search+me+baby',
-                      matchDomainOnly, {
-                        host: simplePattern,
-                      })
-              ).toBe(true);
-            });
-            let prefix = matchDomainOnly ? 'should not' : 'should';
-            let description = `${prefix} match url with pattern only in path`;
-            it(description, () => {
-              expect(
-                  utils.matchesSavedMap(
-                      'https://google.com/?q=duckduckgo',
-                      matchDomainOnly, {
-                        host: simplePattern,
-                      })
-              ).toBe(!matchDomainOnly);
-            });
-          };
+      function checkUrls(urls, {
+        matchDomainOnly = false,
+        shouldMatch = true,
+      }) {
+        const preferences = {matchDomainOnly};
+        const hostMap = {host: pattern};
+
+        for (let url of urls) {
+          const prefix = shouldMatch ? 'should' : 'should not';
+          it(`${prefix} match ${url}`, () => {
+            expect(
+                utils.matchesSavedMap(
+                    url,
+                    preferences,
+                    hostMap
+                )
+            ).toBe(shouldMatch);
+          });
         }
 
-        describe('with regex host prefix', testPrefixes(true));
-        describe('with glob host prefix', testPrefixes());
-      };
+      }
+
+      checkUrls(goodUrls, {matchDomainOnly});
+      checkUrls(badUrls, {matchDomainOnly, shouldMatch: false});
     }
 
-    test();
-    describe('with matchDomainOnly', test(true));
+    const tests = require('./matchesSavedMap.config');
+
+    for (let description in tests) {
+      const prefixConfig = tests[description];
+      describe(description, () => {
+
+        for (let pattern in prefixConfig) {
+          const patternConfig = prefixConfig[pattern];
+          describe(pattern, () => {
+
+            for (let testConfigName in patternConfig) {
+              const testConfig = patternConfig[testConfigName];
+              const matchDomainOnly = testConfigName === 'matchDomainOnly';
+
+              describe(
+                  matchDomainOnly ? 'matchDomainOnly' : 'full match',
+                  () => {
+                    makeMatchesSavedMapTest(
+                        pattern,
+                        testConfig['good'],
+                        testConfig['bad'],
+                        matchDomainOnly
+                    );
+
+                  }
+              );
+            }
+
+          });
+        }
+      });
+    }
 
   });
 
