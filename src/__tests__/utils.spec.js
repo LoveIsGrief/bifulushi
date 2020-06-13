@@ -64,87 +64,66 @@ describe('utils', () => {
   });
 
   describe('matchesSavedMap', () => {
-    function test(matchDomainOnly) {
-      matchDomainOnly = !!matchDomainOnly;
-      return () => {
-        describe('without host prefix', () => {
-          it('should match url without path', () => {
-            expect(
-                utils.matchesSavedMap('https://duckduckgo.com', matchDomainOnly, {
-                  host: 'duckduckgo.com',
-                })
-            ).toBe(true);
-          });
-        });
+    function makeMatchesSavedMapTest(pattern, goodUrls, badUrls, matchDomainOnly = false) {
 
-        function testPrefixes(pattern, expectedUrl, evilUrl) {
-          return () => {
-            it('should match url without path', () => {
-              expect(
-                  utils.matchesSavedMap(
-                      expectedUrl,
-                      matchDomainOnly, {
-                        host: pattern,
-                      })
-              ).toBe(true);
-            });
-            it('should match url with path', () => {
-              expect(
-                  utils.matchesSavedMap(
-                    expectedUrl + '/?q=search+me+baby',
-                      matchDomainOnly, {
-                        host: pattern,
-                      })
-              ).toBe(true);
-            });
-            let prefix = matchDomainOnly ? 'should not' : 'should';
-            let description = `${pattern} ${prefix} match ${evilUrl}`;
-            it(description, () => {
-              expect(
-                  utils.matchesSavedMap(
-                      evilUrl,
-                      matchDomainOnly, {
-                        host: pattern,
-                      })
-              ).toBe(!matchDomainOnly);
-            });
-          };
+      function checkUrls(urls, {
+        matchDomainOnly = false,
+        shouldMatch = true,
+      }) {
+        const preferences = {matchDomainOnly};
+        const hostMap = {host: pattern};
+
+        for (let url of urls) {
+          const prefix = shouldMatch ? 'should' : 'should not';
+          it(`${prefix} match ${url}`, () => {
+            expect(
+                utils.matchesSavedMap(
+                    url,
+                    preferences,
+                    hostMap
+                )
+            ).toBe(shouldMatch);
+          });
         }
 
-        describe('with regex host prefix', testPrefixes(
-            '@duckduckgo\\.com',
-            'https://duckduckgo.com',
-            'https://google.com/?q=duckduckgo'));
+      }
 
-        describe('with glob host prefix', testPrefixes(
-            '!duckduckgo.com',
-            'https://duckduckgo.com',
-            'https://google.com/?q=duckduckgo'));
-
-        describe('with regex host prefix', testPrefixes(
-            '@duckduckgo\\.com',
-            'https://duckduckgo.com',
-            'https://evil.duckduckgo.com.evil.com'));
-
-        describe('with glob host prefix', testPrefixes(
-            '!duckduckgo.com',
-            'https://duckduckgo.com',
-            'https://evil.duckduckgo.com.evil.com'));
-
-        describe('with glob subdomain prefix', testPrefixes(
-            '!*.duckduckgo.com',
-            'https://example.duckduckgo.com',
-            'https://notduckduckgo.com'));
-
-        describe('with regex subdomain prefix', testPrefixes(
-            '@(.+)\\.duckduckgo\\.com',
-            'https://example.duckduckgo.com',
-            'https://notduckduckgo.com'));
-      };
+      checkUrls(goodUrls, {matchDomainOnly});
+      checkUrls(badUrls, {matchDomainOnly, shouldMatch: false});
     }
 
-    describe('without matchDomainOnly', test());
-    describe('with matchDomainOnly', test(true));
+    const tests = require('./matchesSavedMap.config');
+
+    for (let description in tests) {
+      const prefixConfig = tests[description];
+      describe(description, () => {
+
+        for (let pattern in prefixConfig) {
+          const patternConfig = prefixConfig[pattern];
+          describe(pattern, () => {
+
+            for (let testConfigName in patternConfig) {
+              const testConfig = patternConfig[testConfigName];
+              const matchDomainOnly = testConfigName === 'matchDomainOnly';
+
+              describe(
+                  matchDomainOnly ? 'matchDomainOnly' : 'full match',
+                  () => {
+                    makeMatchesSavedMapTest(
+                        pattern,
+                        testConfig['good'],
+                        testConfig['bad'],
+                        matchDomainOnly
+                    );
+
+                  }
+              );
+            }
+
+          });
+        }
+      });
+    }
 
   });
 

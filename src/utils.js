@@ -109,13 +109,11 @@ export const matchesSavedMap = (url, preferences, {host}) => {
     // turning glob into regex isn't the worst thing:
     // 1. * becomes .*
     // 2. ? becomes .?
-    // Because the string is regex escaped, you must match \* to instead of *
+    // Because the string is regex escaped, you must match \* too instead of *
     let regex = escapeRegExp(host.substr(1))
       .replace(/\\\*/g, '.*')
       .replace(/\\\?/g, '.?');
-    if (matchDomainOnly) {
-      regex = '^' + regex + '$';
-    }
+    regex = '^' + regex + '$';
     return new RegExp(regex).test(toMatch);
   } else {
     const key = urlKeyFromUrl(urlO);
