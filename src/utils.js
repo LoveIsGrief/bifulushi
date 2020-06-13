@@ -100,10 +100,6 @@ export const matchesSavedMap = (url, preferences, {host}) => {
 
   if (host[0] === PREFIX_REGEX) {
     let regex = host.substr(1);
-    if (matchDomainOnly) {
-      // This might generate double ^^ characters, but that works anyway
-      regex = '^' + regex + '$';
-    }
     try {
       return new RegExp(regex).test(toMatch);
     } catch (e) {
