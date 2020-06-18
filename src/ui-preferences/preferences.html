@@ -63,13 +63,31 @@
         </div>
       </div>
     </div>
-    <div class="text-field">
-      <div class="text-field__header">
+
+    <div class="preference-field">
+      <div class="preference-field__header">
         Container name
       </div>
-      <input class="text-field__input" type="text">
+      <input type="text"/>
+    </div>
 
-      </input>
+    <div class="preference-field">
+      <div class="preference-field__header">
+        Lifetime
+      </div>
+      <div class="preference-radio">
+        <label class="radio-container">
+
+          <input type="radio" name="lifetime" checked="checked">
+          <span class="radio-container__overlay"></span>
+          <span class="radio-container__label">Forever</span>
+        </label>
+        <label class="radio-container">
+          <input type="radio" name="lifetime">
+          <span class="radio-container__overlay"></span>
+          <span class="radio-container__label">Until last tab closed</span>
+        </label>
+      </div>
     </div>
   </div>
 </div>
