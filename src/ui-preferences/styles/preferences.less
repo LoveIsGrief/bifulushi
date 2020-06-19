@@ -27,7 +27,6 @@ header {
   --v-padding: 5px;
   --h-padding: 15px;
   /* Text */
-  font: Medium 20px/20px Rubik;
   letter-spacing: 0.25px;
   color: #7e97b8;
   text-align: center;
@@ -112,12 +111,12 @@ header {
 
   .toggle__indicator {
     position: relative;
-    width: 36px;
-    height: 34px;
+    width: 32px;
+    height: 30px;
 
-    background: #ebf2fa 0% 0% no-repeat padding-box;
+    background: #ebf2fa 0% 0% no-repeat;
     box-shadow: 4px 2px 8px #5f9de7a8;
-    border: 2px solid #ffffff4d;
+    border: 4px solid #ffffff4d;
     border-radius: var(--small-border-radius);
 
     /* Animations */
@@ -127,8 +126,9 @@ header {
 
   &--active {
     .toggle__indicator {
-      background: transparent linear-gradient(133deg, #16b1ff 0%, #0979ff 100%) 0% 0% no-repeat padding-box;
-      margin-left: 36px;
+      background: transparent linear-gradient(133deg, #16b1ff 0%, #0979ff 100%) 0% 0% no-repeat;
+      margin-left: 40px;
+      border-color: #16b1ff;
     }
   }
 }
