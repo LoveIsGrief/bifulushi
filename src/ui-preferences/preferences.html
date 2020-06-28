@@ -3,7 +3,8 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js">
   </script>
   <title>Preferences</title>
-  <meta name="Related" content="https://xd.adobe.com/view/54245f19-cc0a-4d4c-400d-39741c53085a-2215/">
+  <meta name="Related"
+        content="https://xd.adobe.com/view/54245f19-cc0a-4d4c-400d-39741c53085a-2215/">
 </head>
 
 <body>
@@ -97,4 +98,55 @@
     </div>
   </div>
 </div>
+<template id="tab-container">
+  <style>
+      header div {
+          position: relative;
+      }
+
+      header label {
+          background: teal;
+      }
+
+      header input {
+          position: absolute;
+          opacity: 0;
+      }
+
+      header input:checked ~ label {
+          background: red;
+      }
+
+      .hidden-views {
+          display: none;
+      }
+  </style>
+
+  <header></header>
+  <div class="hidden-views">
+    <slot name="hidden-views"></slot>
+  </div>
+  <div class="current-view">
+    <slot name="default-view">
+      Put &lt;tab-content&gt; elements in here
+    </slot>
+  </div>
+
+</template>
+<template id="tab-content">
+  <style>
+      :host {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          align-content: flex-start;
+          flex-grow: 1;
+      }
+  </style>
+  <slot>
+    Put content in here
+  </slot>
+</template>
+<script src="components/tabs/tab-container.js" type="module"></script>
 </body>
