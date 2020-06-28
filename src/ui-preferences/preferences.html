@@ -2,110 +2,141 @@
   <link rel="stylesheet/less" type="text/css" href="./styles/preferences.less"/>
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js">
   </script>
+  <script src="components/tabs/tab-container.js" type="module"></script>
   <title>Preferences</title>
   <meta name="Related"
         content="https://xd.adobe.com/view/54245f19-cc0a-4d4c-400d-39741c53085a-2215/">
 </head>
 
 <body>
-<header>
-  <span class="tab selected">Preferences</span>
-  <span class="tab">Container</span>
-</header>
 
-<div class="tab-content" id="preferences">
-  <div class="card card--small">
-    <div class="toggle-preference toggle-preference--active">
-      <div class="toggle-container">
-        <div class="toggle toggle--active">
-          <div class="toggle__indicator"></div>
-        </div>
-      </div>
-      <div class="text-container">
-        <div class="text-container__description">
-          Match Domain only
-        </div>
-        <div class="text-container__state">
-          On
-        </div>
-      </div>
-    </div>
+<tab-container>
+  <div slot="hidden-views">
+    <tab-content tab-title="Containers">
+
+    </tab-content>
   </div>
-  <div class="card card--small">
-    <div class="toggle-preference">
-      <div class="toggle-container">
-        <div class="toggle">
-          <div class="toggle__indicator active"></div>
+  <tab-content tab-title="Preferences" slot="default-view">
+    <div class="card card--small">
+      <div class="toggle-preference toggle-preference--active">
+        <div class="toggle-container">
+          <div class="toggle toggle--active">
+            <div class="toggle__indicator"></div>
+          </div>
         </div>
-      </div>
-      <div class="text-container">
-        <div class="text-container__description">
-          Keep old tabs
-        </div>
-        <div class="text-container__state">
-          Off
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="toggle-preference">
-      <div class="toggle-container">
-        <div class="toggle">
-          <div class="toggle__indicator"></div>
-        </div>
-      </div>
-      <div class="text-container">
-        <div class="text-container__description">
-          Default Container
-        </div>
-        <div class="text-container__state">
-          Off
+        <div class="text-container">
+          <div class="text-container__description">
+            Match Domain only
+          </div>
+          <div class="text-container__state">
+            On
+          </div>
         </div>
       </div>
     </div>
+    <div class="card card--small">
+      <div class="toggle-preference">
+        <div class="toggle-container">
+          <div class="toggle">
+            <div class="toggle__indicator active"></div>
+          </div>
+        </div>
+        <div class="text-container">
+          <div class="text-container__description">
+            Keep old tabs
+          </div>
+          <div class="text-container__state">
+            Off
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="toggle-preference">
+        <div class="toggle-container">
+          <div class="toggle">
+            <div class="toggle__indicator"></div>
+          </div>
+        </div>
+        <div class="text-container">
+          <div class="text-container__description">
+            Default Container
+          </div>
+          <div class="text-container__state">
+            Off
+          </div>
+        </div>
+      </div>
 
-    <div class="preference-field">
-      <div class="preference-field__header">
-        Container name
+      <div class="preference-field">
+        <div class="preference-field__header">
+          Container name
+        </div>
+        <input type="text"/>
       </div>
-      <input type="text"/>
-    </div>
 
-    <div class="preference-field">
-      <div class="preference-field__header">
-        Lifetime
-      </div>
-      <div class="preference-radio">
-        <label class="radio-container">
+      <div class="preference-field">
+        <div class="preference-field__header">
+          Lifetime
+        </div>
+        <div class="preference-radio">
+          <label class="radio-container">
 
-          <input type="radio" name="lifetime" checked="checked">
-          <span class="radio-container__overlay"></span>
-          <span class="radio-container__label">Forever</span>
-        </label>
-        <label class="radio-container">
-          <input type="radio" name="lifetime">
-          <span class="radio-container__overlay"></span>
-          <span class="radio-container__label">Until last tab closed</span>
-        </label>
+            <input type="radio" name="lifetime" checked="checked">
+            <span class="radio-container__overlay"></span>
+            <span class="radio-container__label">Forever</span>
+          </label>
+          <label class="radio-container">
+            <input type="radio" name="lifetime">
+            <span class="radio-container__overlay"></span>
+            <span class="radio-container__label">Until last tab closed</span>
+          </label>
+        </div>
+      </div>
+      <div class="preference-field">
+        <div class="preference-field__header">
+          Rule addition
+        </div>
+        <input type="text"/>
       </div>
     </div>
-    <div class="preference-field">
-      <div class="preference-field__header">
-        Rule addition
-      </div>
-      <input type="text"/>
-    </div>
-  </div>
-</div>
+  </tab-content>
+</tab-container>
+
+
 <template id="tab-container">
   <style>
+      header {
+          --v-padding: 5px;
+          --h-padding: 15px;
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-content: stretch;
+          margin-bottom: 20px;
+      }
       header div {
           position: relative;
       }
 
       header label {
-          background: teal;
+
+          /* Text */
+          letter-spacing: 0.25px;
+          color: #7e97b8;
+          text-align: center;
+
+          /* Position */
+
+          /* Form */
+          /*box-shadow: 4px 2px 16px #5F9DE77A;*/
+          border: 1px solid #7e97b8;
+          border-radius: var(--border-radius);
+          padding-top: var(--v-padding);
+          padding-bottom: var(--v-padding);
+          padding-left: var(--h-padding);
+          padding-right: var(--h-padding);
       }
 
       header input {
@@ -114,7 +145,12 @@
       }
 
       header input:checked ~ label {
-          background: red;
+          color: #ffffff;
+
+          background: #13a7fb 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5f9de77a;
+          border: 2px solid #98cdfa;
+          opacity: 1;
       }
 
       .hidden-views {
@@ -124,11 +160,13 @@
 
   <header></header>
   <div class="hidden-views">
-    <slot name="hidden-views"></slot>
+    <slot name="hidden-views">
+      Put &lt;tab-content&gt; elements in hidden views
+    </slot>
   </div>
   <div class="current-view">
     <slot name="default-view">
-      Put &lt;tab-content&gt; elements in here
+      Use &lt;tab-content&gt; element in default slot
     </slot>
   </div>
 
@@ -148,5 +186,4 @@
     Put content in here
   </slot>
 </template>
-<script src="components/tabs/tab-container.js" type="module"></script>
 </body>

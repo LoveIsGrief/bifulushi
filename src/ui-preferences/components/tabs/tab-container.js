@@ -1,6 +1,6 @@
-import {BaseCustomElement} from '../base';
-import {TabContent} from './tab-content';
-import {createEl} from '../../utils';
+import {BaseCustomElement} from '../base.js';
+import {TabContent} from './tab-content.js';
+import {createEl} from '../../utils.js';
 
 class TabContainer extends BaseCustomElement {
   constructor() {

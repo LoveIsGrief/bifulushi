@@ -1,4 +1,4 @@
-import {BaseCustomElement} from '../base';
+import {BaseCustomElement} from '../base.js';
 
 export class TabContent extends BaseCustomElement {
   constructor() {
