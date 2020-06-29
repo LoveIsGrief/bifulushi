@@ -3,6 +3,7 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.11.1/less.min.js">
   </script>
   <script src="components/tabs/tab-container.js" type="module"></script>
+  <script src="components/card.js" type="module"></script>
   <title>Preferences</title>
   <meta name="Related"
         content="https://xd.adobe.com/view/54245f19-cc0a-4d4c-400d-39741c53085a-2215/">
@@ -17,41 +18,43 @@
     </tab-content>
   </div>
   <tab-content tab-title="Preferences" slot="default-view">
-    <div class="card card--small">
-      <div class="toggle-preference toggle-preference--active">
-        <div class="toggle-container">
-          <div class="toggle toggle--active">
-            <div class="toggle__indicator"></div>
+    <div class="header">
+      <card-el small>
+        <div class="toggle-preference toggle-preference--active">
+          <div class="toggle-container">
+            <div class="toggle toggle--active">
+              <div class="toggle__indicator"></div>
+            </div>
+          </div>
+          <div class="text-container">
+            <div class="text-container__description">
+              Match Domain only
+            </div>
+            <div class="text-container__state">
+              On
+            </div>
           </div>
         </div>
-        <div class="text-container">
-          <div class="text-container__description">
-            Match Domain only
+      </card-el>
+      <card-el small>
+        <div class="toggle-preference">
+          <div class="toggle-container">
+            <div class="toggle">
+              <div class="toggle__indicator active"></div>
+            </div>
           </div>
-          <div class="text-container__state">
-            On
+          <div class="text-container">
+            <div class="text-container__description">
+              Keep old tabs
+            </div>
+            <div class="text-container__state">
+              Off
+            </div>
           </div>
         </div>
-      </div>
+      </card-el>
     </div>
-    <div class="card card--small">
-      <div class="toggle-preference">
-        <div class="toggle-container">
-          <div class="toggle">
-            <div class="toggle__indicator active"></div>
-          </div>
-        </div>
-        <div class="text-container">
-          <div class="text-container__description">
-            Keep old tabs
-          </div>
-          <div class="text-container__state">
-            Off
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="card">
+    <card-el>
       <div class="toggle-preference">
         <div class="toggle-container">
           <div class="toggle">
@@ -99,7 +102,7 @@
         </div>
         <input type="text"/>
       </div>
-    </div>
+    </card-el>
   </tab-content>
 </tab-container>
 
@@ -116,6 +119,7 @@
           align-content: stretch;
           margin-bottom: 20px;
       }
+
       header div {
           position: relative;
       }
@@ -175,8 +179,7 @@
   <style>
       :host {
           display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
+          flex-direction: column;
           justify-content: space-between;
           align-content: flex-start;
           flex-grow: 1;
@@ -185,5 +188,47 @@
   <slot>
     Put content in here
   </slot>
+</template>
+<template id="card-el">
+  <style>
+      :host {
+          --child-v-margin: 30px;
+          --h-padding: 20px;
+
+          display: flex;
+          flex-grow: 2;
+          flex-direction: column;
+
+          padding-left: var(--h-padding);
+          padding-right: var(--h-padding);
+          margin: 10px;
+
+          background: #ebf2fa 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5f9de77a;
+          border: 2px solid #0f91fa60;
+          border-radius: var(--border-radius);
+      }
+
+      :host[small] {
+          min-width: 40%;
+          max-width: 50%;
+          flex-grow: 0.5;
+      }
+
+      /* Forced equidistant spacing between slotted elements */
+      ::slotted(*:nth-child(n+2):nth-last-child(n+2))  {
+          margin-bottom: var(--child-v-margin);
+      }
+
+      ::slotted(*:first-child) {
+          margin-top: var(--child-v-margin);
+          margin-bottom: var(--child-v-margin);
+      }
+
+      ::slotted(*:nth-last-child(1)) {
+          margin-bottom: var(--child-v-margin);
+      }
+  </style>
+  <slot></slot>
 </template>
 </body>

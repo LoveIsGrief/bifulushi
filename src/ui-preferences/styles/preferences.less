@@ -15,41 +15,6 @@ body {
 
 }
 
-.card {
-  --child-v-margin: 30px;
-  --h-padding: 20px;
-
-  display: flex;
-  flex-grow: 2;
-  flex-direction: column;
-
-  padding-left: var(--h-padding);
-  padding-right: var(--h-padding);
-  margin: 10px;
-
-  background: #ebf2fa 0% 0% no-repeat padding-box;
-  box-shadow: 4px 2px 16px #5f9de77a;
-  border: 2px solid #0f91fa60;
-  border-radius: var(--border-radius);
-
-  &--small {
-    min-width: 40%;
-    max-width: 50%;
-    flex-grow: 0.5;
-  }
-  /* Forced equidistant spacing between internal elements */
-  &> div:nth-child(n+2):nth-last-child(n+2) {
-    margin-bottom: var(--child-v-margin);
-  }
-  &> div:first-child {
-    margin-top: var(--child-v-margin);
-    margin-bottom: var(--child-v-margin);
-  }
-  &> div:last-child {
-    margin-bottom: var(--child-v-margin);
-  }
-}
-
 .toggle-preference {
   display: flex;
   justify-content: flex-start;
@@ -60,6 +25,10 @@ body {
   box-shadow: 4px 2px 16px #5f9de77a;
   border: 2px solid #ffffff33;
   border-radius: 16px;
+}
+
+tab-content[tab-title="Preferences"] > div {
+  display: flex;
 }
 
 .toggle {
