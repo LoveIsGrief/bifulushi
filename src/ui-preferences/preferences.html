@@ -4,6 +4,7 @@
   </script>
   <script src="components/tabs/tab-container.js" type="module"></script>
   <script src="components/card.js" type="module"></script>
+  <script src="components/preference-field.js" type="module"></script>
   <title>Preferences</title>
   <meta name="Related"
         content="https://xd.adobe.com/view/54245f19-cc0a-4d4c-400d-39741c53085a-2215/">
@@ -71,17 +72,11 @@
         </div>
       </div>
 
-      <div class="preference-field">
-        <div class="preference-field__header">
-          Container name
-        </div>
+      <preference-field header="Container name">
         <input type="text"/>
-      </div>
+      </preference-field>
 
-      <div class="preference-field">
-        <div class="preference-field__header">
-          Lifetime
-        </div>
+      <preference-field header="Lifetime">
         <div class="preference-radio">
           <label class="radio-container">
 
@@ -95,13 +90,10 @@
             <span class="radio-container__label">Until last tab closed</span>
           </label>
         </div>
-      </div>
-      <div class="preference-field">
-        <div class="preference-field__header">
-          Rule addition
-        </div>
+      </preference-field>
+      <preference-field header="Rule addition">
         <input type="text"/>
-      </div>
+      </preference-field>
     </card-el>
   </tab-content>
 </tab-container>
@@ -216,7 +208,7 @@
       }
 
       /* Forced equidistant spacing between slotted elements */
-      ::slotted(*:nth-child(n+2):nth-last-child(n+2))  {
+      ::slotted(*:nth-child(n+2):nth-last-child(n+2)) {
           margin-bottom: var(--child-v-margin);
       }
 
@@ -229,6 +221,38 @@
           margin-bottom: var(--child-v-margin);
       }
   </style>
+  <slot></slot>
+</template>
+<template id="preference-field">
+  <style>
+      :host > header {
+          letter-spacing: 0.2px;
+          color: #7E97B8;
+          text-transform: uppercase;
+          font-weight: bold;
+      }
+
+      :host > header::after {
+          --size: 12px;
+          content: "i";
+          vertical-align: center;
+
+          position: relative;
+          font-family: Arial, Helvetica, sans-serif;
+
+          color: var(--background-color);
+          background: gray;
+          border-radius: var(--size);
+          line-height: var(--size);
+          font-size: var(--size);
+          width: var(--size);
+          height: var(--size);
+          text-align: center;
+          padding: 1px;
+          text-transform: initial;
+      }
+  </style>
+  <header></header>
   <slot></slot>
 </template>
 </body>
