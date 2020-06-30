@@ -15,70 +15,13 @@ body {
 
 }
 
-.toggle-preference {
-  display: flex;
-  justify-content: flex-start;
-}
 
-.toggle-container {
-  background: #e5edf5 0% 0% no-repeat padding-box;
-  box-shadow: 4px 2px 16px #5f9de77a;
-  border: 2px solid #ffffff33;
-  border-radius: 16px;
-}
+
 
 tab-content[tab-title="Preferences"] > div {
   display: flex;
 }
 
-.toggle {
-  position: relative;
-  width: 80px;
-
-  background: #ebf2fa 0% 0% no-repeat padding-box;
-  box-shadow: 4px 2px 16px #5f9de77a;
-  border: 2px solid #ffffff4d;
-  border-radius: var(--small-border-radius);
-
-  .toggle__indicator {
-    position: relative;
-    width: 32px;
-    height: 30px;
-
-    background: #ebf2fa 0% 0% no-repeat;
-    box-shadow: 4px 2px 8px #5f9de7a8;
-    border: 4px solid #ffffff4d;
-    border-radius: var(--small-border-radius);
-
-    /* Animations */
-    transition-property: margin-left, background-color;
-    transition-duration: 1s;
-  }
-
-  &--active {
-    .toggle__indicator {
-      background: transparent linear-gradient(133deg, #16b1ff 0%, #0979ff 100%) 0% 0% no-repeat;
-      margin-left: 40px;
-      border-color: #16b1ff;
-    }
-  }
-}
-
-.text-container {
-  margin-left: 20px;
-
-  .text-container__description {
-    letter-spacing: 0.28px;
-    color: #0F91FA;
-    font-weight: bold;
-  }
-
-  .text-container__state {
-    letter-spacing: 0.2px;
-    color: #7E97B8;
-    font-weight: bold;
-  }
-}
 
 input[type="text"] {
   background: #FDFEFF 0% 0% no-repeat padding-box;

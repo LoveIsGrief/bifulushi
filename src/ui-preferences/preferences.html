@@ -6,6 +6,7 @@
   <script src="components/card.js" type="module"></script>
   <script src="components/preference-field.js" type="module"></script>
   <script src="components/radio-preferences.js" type="module"></script>
+  <script src="components/toggle-preference.js" type="module"></script>
   <title>Preferences</title>
   <meta name="Related"
         content="https://xd.adobe.com/view/54245f19-cc0a-4d4c-400d-39741c53085a-2215/">
@@ -22,56 +23,20 @@
   <tab-content tab-title="Preferences" slot="default-view">
     <div class="header">
       <card-el small>
-        <div class="toggle-preference toggle-preference--active">
-          <div class="toggle-container">
-            <div class="toggle toggle--active">
-              <div class="toggle__indicator"></div>
-            </div>
-          </div>
-          <div class="text-container">
-            <div class="text-container__description">
-              Match Domain only
-            </div>
-            <div class="text-container__state">
-              On
-            </div>
-          </div>
-        </div>
+        <toggle-preference active>
+          Match Domain only
+        </toggle-preference>
       </card-el>
       <card-el small>
-        <div class="toggle-preference">
-          <div class="toggle-container">
-            <div class="toggle">
-              <div class="toggle__indicator active"></div>
-            </div>
-          </div>
-          <div class="text-container">
-            <div class="text-container__description">
-              Keep old tabs
-            </div>
-            <div class="text-container__state">
-              Off
-            </div>
-          </div>
-        </div>
+        <toggle-preference>
+          Keep old tabs
+        </toggle-preference>
       </card-el>
     </div>
     <card-el>
-      <div class="toggle-preference">
-        <div class="toggle-container">
-          <div class="toggle">
-            <div class="toggle__indicator"></div>
-          </div>
-        </div>
-        <div class="text-container">
-          <div class="text-container__description">
-            Default Container
-          </div>
-          <div class="text-container__state">
-            Off
-          </div>
-        </div>
-      </div>
+      <toggle-preference>
+        Default Container
+      </toggle-preference>
 
       <preference-field header="Container name">
         <input type="text"/>
@@ -264,7 +229,7 @@
           padding: 5px 5px;
       }
 
-      .radio-container input {
+      input {
           opacity: 0;
           position: absolute;
           right: 0;
@@ -273,14 +238,14 @@
           bottom: 0;
       }
 
-      .radio-container .radio-container__label {
+      .radio-container__label {
           letter-spacing: 0.25px;
           color: #0F91FA;
           text-transform: capitalize;
           padding-left: 20px;
       }
 
-      .radio-container .radio-container__overlay {
+      .radio-container__overlay {
           position: relative;
           display: flex;
           justify-content: center;
@@ -294,7 +259,7 @@
           border-radius: var(--radio-radius);
       }
 
-      .radio-container input:checked ~ .radio-container__overlay::after {
+      input:checked ~ .radio-container__overlay::after {
           --size: 17px;
           content: ' ';
           background: transparent linear-gradient(135deg, #16B1FF 0%, #0979FF 100%) 0% 0% no-repeat padding-box;
@@ -307,5 +272,87 @@
       }
 
   </style>
+</template>
+<template id="toggle-preference">
+  <style>
+      :host {
+          display: flex;
+          justify-content: flex-start;
+      }
+      #switch {
+          position: absolute;
+          opacity: 0;
+      }
+
+      .toggle-container {
+          background: #e5edf5 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5f9de77a;
+          border: 2px solid #ffffff33;
+          border-radius: 16px;
+      }
+
+      .toggle {
+          position: relative;
+          width: 80px;
+
+          background: #ebf2fa 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5f9de77a;
+          border: 2px solid #ffffff4d;
+          border-radius: var(--small-border-radius);
+
+      }
+
+      #switch:checked ~ .toggle-container .toggle__indicator {
+          background: transparent linear-gradient(133deg, #16b1ff 0%, #0979ff 100%) 0% 0% no-repeat;
+          margin-left: 40px;
+          border-color: #16b1ff;
+      }
+
+      .toggle__indicator {
+          position: relative;
+          width: 32px;
+          height: 30px;
+
+          background: #ebf2fa 0% 0% no-repeat;
+          box-shadow: 4px 2px 8px #5f9de7a8;
+          border: 4px solid #ffffff4d;
+          border-radius: var(--small-border-radius);
+
+          /* Animations */
+          transition-property: margin-left, background-color;
+          transition-duration: 1s;
+      }
+
+      .text-container {
+          margin-left: 20px;
+      }
+
+      .text-container__description {
+          letter-spacing: 0.28px;
+          color: #0F91FA;
+          font-weight: bold;
+      }
+
+      .text-container__state {
+          letter-spacing: 0.2px;
+          color: #7E97B8;
+          font-weight: bold;
+      }
+  </style>
+  <input id="switch" type="checkbox">
+  <label for="switch" class="toggle-container">
+    <div class="toggle">
+      <div class="toggle__indicator"></div>
+    </div>
+  </label>
+  <div class="text-container">
+    <div class="text-container__description">
+      <slot></slot>
+    </div>
+    <div class="text-container__state">
+      Off
+    </div>
+  </div>
+
 </template>
 </body>
