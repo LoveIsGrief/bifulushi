@@ -333,10 +333,15 @@
           font-weight: bold;
       }
 
-      .text-container__state {
+      .text-container__description:after {
+          display: block;
+          content: 'Off';
           letter-spacing: 0.2px;
           color: #7E97B8;
           font-weight: bold;
+      }
+      #switch:checked ~ .text-container .text-container__description:after {
+          content: 'On';
       }
   </style>
   <input id="switch" type="checkbox">
@@ -348,9 +353,6 @@
   <div class="text-container">
     <div class="text-container__description">
       <slot></slot>
-    </div>
-    <div class="text-container__state">
-      Off
     </div>
   </div>
 

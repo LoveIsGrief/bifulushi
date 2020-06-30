@@ -8,8 +8,6 @@ export class TogglePreferenceElement extends BaseCustomElement {
   }
 
   // TODO: event for check/uncheck
-  // TODO: change text on state change
-
 }
 
 customElements.define('toggle-preference', TogglePreferenceElement);
