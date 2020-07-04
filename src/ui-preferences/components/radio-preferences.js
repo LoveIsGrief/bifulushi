@@ -14,9 +14,6 @@ export class RadioPreferencesElement extends BaseCustomElement {
   constructor() {
     super();
     this._makeShadowRoot('radio-preferences');
-  }
-
-  connectedCallback() {
     // TODO: Allow defining the default selection
     this.getAttributeNames()
         .filter(name => name.startsWith(PREFIX))

@@ -6,9 +6,6 @@ class TabContainer extends BaseCustomElement {
   constructor() {
     super();
     this._makeShadowRoot('tab-container');
-  }
-
-  connectedCallback() {
     this.buildTabs();
   }
 
