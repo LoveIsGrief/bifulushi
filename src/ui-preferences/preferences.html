@@ -7,6 +7,7 @@
   <script src="components/preference-field.js" type="module"></script>
   <script src="components/radio-preferences.js" type="module"></script>
   <script src="components/toggle-preference.js" type="module"></script>
+  <script src="components/container-preference.js" type="module"></script>
   <title>Preferences</title>
   <meta name="Related"
         content="https://xd.adobe.com/view/54245f19-cc0a-4d4c-400d-39741c53085a-2215/">
@@ -17,7 +18,9 @@
 <tab-container>
   <div slot="hidden-views">
     <tab-content tab-title="Containers">
-
+      <container-preference header="Shopping">
+        <span>Something</span>
+      </container-preference>
     </tab-content>
   </div>
   <tab-content tab-title="Preferences" slot="default-view">
@@ -58,6 +61,10 @@
 
 <template id="tab-container">
   <style>
+      :host {
+          display: flex;
+          flex-direction: column;
+      }
       header {
           --v-padding: 5px;
           --h-padding: 15px;
@@ -108,6 +115,10 @@
 
       .hidden-views {
           display: none;
+      }
+      .current-view{
+          display: flex;
+          flex-grow: 1;
       }
   </style>
 
@@ -279,6 +290,7 @@
           display: flex;
           justify-content: flex-start;
       }
+
       #switch {
           position: absolute;
           opacity: 0;
@@ -340,6 +352,7 @@
           color: #7E97B8;
           font-weight: bold;
       }
+
       #switch:checked ~ .text-container .text-container__description:after {
           content: 'On';
       }
@@ -354,6 +367,81 @@
     <div class="text-container__description">
       <slot></slot>
     </div>
+  </div>
+
+</template>
+<template id="container-preference">
+  <style>
+      :host {
+          --icon-size: 36px;
+          --padding: 20px;
+          display: flex;
+          flex-direction: column;
+
+          position: relative;
+          background: #EBF2FA 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5F9DE77A;
+          border: 2px solid #98CDFA;
+          border-radius: 20px;
+          padding: var(--padding);
+
+          flex-grow: 0;
+          transition-duration: 2s;
+          transition-property: flex-grow;
+      }
+
+      #header {
+          text-align: left;
+          letter-spacing: 0.31px;
+          color: #0F91FA;
+          font-weight: bold;
+          margin-bottom: 20px;
+      }
+
+      .icon {
+          position: absolute;
+          right: var(--padding);
+          top: var(--padding);
+          height: var(--icon-size);
+          width: var(--icon-size);
+          background-image: url('cog.svg');
+          background-size: contain;
+          background-repeat: no-repeat;
+      }
+
+      .content {
+          position: relative;
+          overflow: hidden;
+
+          /* Animated properties */
+          flex-grow: 0;
+          max-height: 0vh;
+          transition: max-height,flex-grow;
+          transition-duration: 2s;
+
+          padding-top: 10px;
+      }
+      /* Handles opening and closing the drawer */
+      :host(.open) {
+          flex-grow: 1;
+      }
+      :host(.open) .content {
+          border-top-width: 2px;
+          border-top-style: solid;
+          border-top-color: #98CDFA;
+
+          flex-grow: 1;
+          max-height: 100vh;
+      }
+
+      .splitter {
+      }
+  </style>
+  <header id="header"></header>
+  <div for="toggle" class="icon"></div>
+  <div class="splitter"></div>
+  <div class="content">
+    <slot>Insert something here</slot>
   </div>
 
 </template>

@@ -7,7 +7,7 @@ export class TogglePreferenceElement extends BaseCustomElement {
     this._makeShadowRoot('toggle-preference');
   }
 
-  // TODO: event for check/uncheck
+    // TODO: event for check/uncheck
 }
 
 customElements.define('toggle-preference', TogglePreferenceElement);
