@@ -15,8 +15,20 @@ body {
 
 }
 
+tab-content {
+  flex-direction: column;
+}
+
 tab-content[tab-title="Preferences"] > div {
   display: flex;
+}
+
+tab-content[tab-title="Containers"] {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: baseline;
 }
 
 tab-container {

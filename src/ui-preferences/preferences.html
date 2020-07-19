@@ -19,7 +19,29 @@
   <div slot="hidden-views">
     <tab-content tab-title="Containers">
       <container-preference header="Shopping">
-        <span>Something</span>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+        <div>whatever</div>
+      </container-preference>
+      <container-preference header="Google">
+        <span>Fuck</span>
       </container-preference>
     </tab-content>
   </div>
@@ -65,6 +87,7 @@
           display: flex;
           flex-direction: column;
       }
+
       header {
           --v-padding: 5px;
           --h-padding: 15px;
@@ -116,7 +139,8 @@
       .hidden-views {
           display: none;
       }
-      .current-view{
+
+      .current-view {
           display: flex;
           flex-grow: 1;
       }
@@ -139,9 +163,7 @@
   <style>
       :host {
           display: flex;
-          flex-direction: column;
           justify-content: space-between;
-          align-content: flex-start;
           flex-grow: 1;
       }
   </style>
@@ -378,6 +400,8 @@
           display: flex;
           flex-direction: column;
 
+          align-content: baseline;
+
           position: relative;
           background: #EBF2FA 0% 0% no-repeat padding-box;
           box-shadow: 4px 2px 16px #5F9DE77A;
@@ -386,8 +410,11 @@
           padding: var(--padding);
 
           flex-grow: 0;
-          transition-duration: 2s;
-          transition-property: flex-grow;
+          flex-shrink: 1;
+
+          flex-basis: 30%;
+          transition-property: flex-grow, height, flex-basis;
+          transition-duration: 1s;
       }
 
       #header {
@@ -396,6 +423,7 @@
           color: #0F91FA;
           font-weight: bold;
           margin-bottom: 20px;
+          margin-right: calc(var(--icon-size) + var(--padding));
       }
 
       .icon {
@@ -411,36 +439,38 @@
 
       .content {
           position: relative;
-          overflow: hidden;
+          overflow: auto;
 
           /* Animated properties */
-          flex-grow: 0;
-          max-height: 0vh;
-          transition: max-height,flex-grow;
-          transition-duration: 2s;
-
+          max-height: 0;
           padding-top: 10px;
+          transition-property: max-height, border-top-width;
+          transition-duration: 1s;
       }
+
       /* Handles opening and closing the drawer */
       :host(.open) {
-          flex-grow: 1;
+          flex-basis: 100%;
       }
+
       :host(.open) .content {
           border-top-width: 2px;
           border-top-style: solid;
           border-top-color: #98CDFA;
 
-          flex-grow: 1;
-          max-height: 100vh;
-      }
-
-      .splitter {
+          max-height: 300px;
       }
   </style>
   <header id="header"></header>
   <div for="toggle" class="icon"></div>
   <div class="splitter"></div>
   <div class="content">
+    <preference-field header="Lifetime">
+      <radio-preferences
+          radio-forever="Forever"
+          radio-last="Until last tab closed"
+      />
+    </preference-field>
     <slot>Insert something here</slot>
   </div>
 
