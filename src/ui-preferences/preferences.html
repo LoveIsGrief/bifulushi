@@ -71,6 +71,7 @@
         <radio-preferences
             radio-forever="Forever"
             radio-last="Until last tab closed"
+            default-radio="radio-last"
         />
       </preference-field>
       <preference-field header="Rule addition">
@@ -273,7 +274,7 @@
 
       .radio-container__label {
           letter-spacing: 0.25px;
-          color: #0F91FA;
+          color: #7E97B8;
           text-transform: capitalize;
           padding-left: 20px;
       }
@@ -290,6 +291,10 @@
           box-shadow: 4px 2px 16px #5F9DE77A;
           border: 2px solid #FFFFFF33;
           border-radius: var(--radio-radius);
+      }
+
+      input:checked ~ .radio-container__label {
+        color: #0F91FA;
       }
 
       input:checked ~ .radio-container__overlay::after {

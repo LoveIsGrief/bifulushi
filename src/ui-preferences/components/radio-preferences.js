@@ -2,7 +2,7 @@ import {BaseCustomElement} from './base.js';
 import {createEl} from '../utils.js';
 
 const RADIO_NAME = 'radio';
-
+const ATTR_DEFAULT = 'default-radio';
 export const PREFIX = 'radio-';
 
 /**
@@ -14,23 +14,30 @@ export class RadioPreferencesElement extends BaseCustomElement {
   constructor() {
     super();
     this._makeShadowRoot('radio-preferences');
-    // TODO: Allow defining the default selection
-    this.getAttributeNames()
-        .filter(name => name.startsWith(PREFIX))
-        .map(this.createRadio.bind(this))
+
+    const radioAttributes = this.getAttributeNames()
+        .filter(name => name.startsWith(PREFIX));
+    if(!radioAttributes.length){
+      // No radio attributes means no radios to create
+      return;
+    }
+    this._defaultRadio = this.getAttribute(ATTR_DEFAULT) || radioAttributes[0];
+    radioAttributes.map(this.createRadio.bind(this))
         .forEach(this._shadowRoot.appendChild.bind(this._shadowRoot));
   }
 
-  createRadio(name) {
+  createRadio(id) {
     // TODO: Trigger events when something is selected
-    const value = this.getAttribute(name);
-    return createEl(`
-    <label class="radio-container">
+    const value = this.getAttribute(id);
+    const $label = createEl(`
+    <label id="${id}" class="radio-container">
       <input type="radio" name="${RADIO_NAME}">
       <span class="radio-container__overlay"></span>
       <span class="radio-container__label">${value}</span>
     </label>
     `);
+    $label.querySelector('input').checked = this._defaultRadio === id;
+    return $label;
   }
 
 }
