@@ -1,3 +1,5 @@
+/*BEM is used for classes*/
+/*https://en.bem.info/methodology/quick-start/*/
 body {
   --border-radius: 20px;
   --small-border-radius: 12px;

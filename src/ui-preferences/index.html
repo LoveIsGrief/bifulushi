@@ -1,17 +1,465 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>bifulushi preferences</title>
-    <link rel="stylesheet" href="index.css"/>
-    <script type="module" src="index.js"></script>
+  <meta charset="UTF-8">
+  <title>bifulushi preferences</title>
+  <link rel="stylesheet" href="styles/index.css"/>
+  <script src="components/tabs/tab-container.js" type="module"></script>
+  <script src="components/card.js" type="module"></script>
+  <script src="components/preference-field.js" type="module"></script>
+  <script src="components/radio-preferences.js" type="module"></script>
+  <script src="components/toggle-preference.js" type="module"></script>
+  <script src="components/container-preference.js" type="module"></script>
 </head>
 <body>
-<h1>Preferences</h1>
-<div class="preferences-container">
+<tab-container>
+  <div slot="hidden-views">
+    <tab-content tab-title="Containers">
+      <container-preference header="Shopping">
+      </container-preference>
+      <container-preference header="Google">
+      </container-preference>
+    </tab-content>
+  </div>
+  <tab-content tab-title="Preferences" slot="default-view">
+    <div class="header">
+      <card-el small>
+        <toggle-preference active>
+          Match Domain only
+        </toggle-preference>
+      </card-el>
+      <card-el small>
+        <toggle-preference>
+          Keep old tabs
+        </toggle-preference>
+      </card-el>
+    </div>
+    <card-el>
+      <toggle-preference>
+        Default Container
+      </toggle-preference>
 
-</div>
+      <preference-field header="Container name">
+        <input type="text"/>
+      </preference-field>
 
+      <preference-field header="Lifetime">
+        <radio-preferences
+            radio-forever="Forever"
+            radio-last="Until last tab closed"
+            default-radio="radio-last"
+        />
+      </preference-field>
+      <preference-field header="Rule addition">
+        <input type="text"/>
+      </preference-field>
+    </card-el>
+  </tab-content>
+</tab-container>
+
+
+<template id="tab-container">
+  <style>
+      :host {
+          display: flex;
+          flex-direction: column;
+      }
+
+      header {
+          --v-padding: 5px;
+          --h-padding: 15px;
+          position: relative;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-content: stretch;
+          margin-bottom: 20px;
+      }
+
+      header div {
+          position: relative;
+      }
+
+      header label {
+
+          /* Text */
+          letter-spacing: 0.25px;
+          color: #7e97b8;
+          text-align: center;
+
+          /* Position */
+
+          /* Form */
+          /*box-shadow: 4px 2px 16px #5F9DE77A;*/
+          border: 1px solid #7e97b8;
+          border-radius: var(--border-radius);
+          padding-top: var(--v-padding);
+          padding-bottom: var(--v-padding);
+          padding-left: var(--h-padding);
+          padding-right: var(--h-padding);
+      }
+
+      header input {
+          position: absolute;
+          opacity: 0;
+      }
+
+      header input:checked ~ label {
+          color: #ffffff;
+
+          background: #13a7fb 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5f9de77a;
+          border: 2px solid #98cdfa;
+          opacity: 1;
+      }
+
+      .hidden-views {
+          display: none;
+      }
+
+      .current-view {
+          display: flex;
+          flex-grow: 1;
+      }
+  </style>
+
+  <header></header>
+  <div class="hidden-views">
+    <slot name="hidden-views">
+      Put &lt;tab-content&gt; elements in hidden views
+    </slot>
+  </div>
+  <div class="current-view">
+    <slot name="default-view">
+      Use &lt;tab-content&gt; element in default slot
+    </slot>
+  </div>
+
+</template>
+<template id="tab-content">
+  <style>
+      :host {
+          display: flex;
+          justify-content: space-between;
+          flex-grow: 1;
+      }
+  </style>
+  <slot>
+    Put content in here
+  </slot>
+</template>
+<template id="card-el">
+  <style>
+      :host {
+          --child-v-margin: 30px;
+          --h-padding: 20px;
+
+          display: flex;
+          flex-grow: 2;
+          flex-direction: column;
+
+          padding-left: var(--h-padding);
+          padding-right: var(--h-padding);
+          margin: 10px;
+
+          background: #ebf2fa 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5f9de77a;
+          border: 2px solid #0f91fa60;
+          border-radius: var(--border-radius);
+      }
+
+      :host[small] {
+          min-width: 40%;
+          max-width: 50%;
+          flex-grow: 0.5;
+      }
+
+      /* Forced equidistant spacing between slotted elements */
+      ::slotted(*:nth-child(n+2):nth-last-child(n+2)) {
+          margin-bottom: var(--child-v-margin);
+      }
+
+      ::slotted(*:first-child) {
+          margin-top: var(--child-v-margin);
+          margin-bottom: var(--child-v-margin);
+      }
+
+      ::slotted(*:nth-last-child(1)) {
+          margin-bottom: var(--child-v-margin);
+      }
+  </style>
+  <slot></slot>
+</template>
+<template id="preference-field">
+  <style>
+      :host > header {
+          letter-spacing: 0.2px;
+          color: #7E97B8;
+          text-transform: uppercase;
+          font-weight: bold;
+      }
+
+      :host > header::after {
+          --size: 12px;
+          content: "i";
+          vertical-align: center;
+
+          position: relative;
+          font-family: Arial, Helvetica, sans-serif;
+
+          color: var(--background-color);
+          background: gray;
+          border-radius: var(--size);
+          line-height: var(--size);
+          font-size: var(--size);
+          width: var(--size);
+          height: var(--size);
+          text-align: center;
+          padding: 1px;
+          text-transform: initial;
+      }
+  </style>
+  <header></header>
+  <slot></slot>
+</template>
+<template id="radio-preferences">
+  <style>
+      :host {
+          display: flex;
+          justify-content: flex-start;
+      }
+
+      .radio-container {
+          --radio-radius: 25px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          margin-right: 40px;
+
+          padding: 5px 5px;
+      }
+
+      input {
+          opacity: 0;
+          position: absolute;
+          right: 0;
+          left: 0;
+          top: 0;
+          bottom: 0;
+      }
+
+      .radio-container__label {
+          letter-spacing: 0.25px;
+          color: #7E97B8;
+          text-transform: capitalize;
+          padding-left: 20px;
+      }
+
+      .radio-container__overlay {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: var(--radio-radius);
+          height: var(--radio-radius);
+
+          background: #E5EDF5 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5F9DE77A;
+          border: 2px solid #FFFFFF33;
+          border-radius: var(--radio-radius);
+      }
+
+      input:checked ~ .radio-container__label {
+          color: #0F91FA;
+      }
+
+      input:checked ~ .radio-container__overlay::after {
+          --size: 17px;
+          content: ' ';
+          background: transparent linear-gradient(135deg, #16B1FF 0%, #0979FF 100%) 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 8px #5F9DE7A8;
+          border: 2px solid #FFFFFF4D;
+          position: relative;
+          width: var(--size);
+          height: var(--size);
+          border-radius: var(--size);
+      }
+
+  </style>
+</template>
+<template id="toggle-preference">
+  <style>
+      :host {
+          display: flex;
+          justify-content: flex-start;
+      }
+
+      #switch {
+          position: absolute;
+          opacity: 0;
+      }
+
+      .toggle-container {
+          background: #e5edf5 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5f9de77a;
+          border: 2px solid #ffffff33;
+          border-radius: 16px;
+      }
+
+      .toggle {
+          position: relative;
+          width: 80px;
+
+          background: #ebf2fa 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5f9de77a;
+          border: 2px solid #ffffff4d;
+          border-radius: var(--small-border-radius);
+
+      }
+
+      #switch:checked ~ .toggle-container .toggle__indicator {
+          background: transparent linear-gradient(133deg, #16b1ff 0%, #0979ff 100%) 0% 0% no-repeat;
+          margin-left: 40px;
+          border-color: #16b1ff;
+      }
+
+      .toggle__indicator {
+          position: relative;
+          width: 32px;
+          height: 30px;
+
+          background: #ebf2fa 0% 0% no-repeat;
+          box-shadow: 4px 2px 8px #5f9de7a8;
+          border: 4px solid #ffffff4d;
+          border-radius: var(--small-border-radius);
+
+          /* Animations */
+          transition-property: margin-left, background-color;
+          transition-duration: 1s;
+      }
+
+      .text-container {
+          margin-left: 20px;
+      }
+
+      .text-container__description {
+          letter-spacing: 0.28px;
+          color: #7E97B8;
+          font-weight: bold;
+      }
+
+      .text-container__description:after {
+          display: block;
+          content: 'Off';
+          letter-spacing: 0.2px;
+          color: #7E97B8;
+          font-weight: bold;
+      }
+
+      #switch:checked ~ .text-container .text-container__description {
+          color: #0F91FA;
+      }
+
+      #switch:checked ~ .text-container .text-container__description:after {
+          content: 'On';
+      }
+  </style>
+  <input id="switch" type="checkbox">
+  <label for="switch" class="toggle-container">
+    <div class="toggle">
+      <div class="toggle__indicator"></div>
+    </div>
+  </label>
+  <div class="text-container">
+    <div class="text-container__description">
+      <slot></slot>
+    </div>
+  </div>
+
+</template>
+<template id="container-preference">
+  <style>
+      :host {
+          --icon-size: 36px;
+          --padding: 20px;
+          display: flex;
+          flex-direction: column;
+
+          align-content: baseline;
+
+          position: relative;
+          background: #EBF2FA 0% 0% no-repeat padding-box;
+          box-shadow: 4px 2px 16px #5F9DE77A;
+          border: 2px solid #98CDFA;
+          border-radius: 20px;
+          padding: var(--padding);
+
+          flex-grow: 0;
+          flex-shrink: 1;
+
+          flex-basis: 30%;
+          transition-property: flex-grow, height, flex-basis;
+          transition-duration: 1s;
+      }
+
+      #header {
+          text-align: left;
+          letter-spacing: 0.31px;
+          color: #0F91FA;
+          font-weight: bold;
+          margin-bottom: 20px;
+          margin-right: calc(var(--icon-size) + var(--padding));
+      }
+
+      .icon {
+          position: absolute;
+          right: var(--padding);
+          top: var(--padding);
+          height: var(--icon-size);
+          width: var(--icon-size);
+          background-image: url('cog.svg');
+          background-size: contain;
+          background-repeat: no-repeat;
+      }
+
+      .content {
+          position: relative;
+          overflow: auto;
+
+          /* Animated properties */
+          max-height: 0;
+          padding-top: 10px;
+          transition-property: max-height, border-top-width;
+          transition-duration: 1s;
+      }
+
+      /* Handles opening and closing the drawer */
+      :host(.open) {
+          flex-basis: 100%;
+      }
+
+      :host(.open) .content {
+          border-top-width: 2px;
+          border-top-style: solid;
+          border-top-color: #98CDFA;
+
+          max-height: 300px;
+      }
+  </style>
+  <header id="header"></header>
+  <div for="toggle" class="icon"></div>
+  <div class="splitter"></div>
+  <div class="content">
+    <preference-field header="Lifetime">
+      <radio-preferences
+          radio-forever="Forever"
+          radio-last="Until last tab closed"
+      />
+    </preference-field>
+    <slot>Insert something here</slot>
+  </div>
+
+</template>
 
 
 </body>

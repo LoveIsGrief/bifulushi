@@ -1,4 +1,4 @@
-import './styles/index.scss';
+import './styles/index.css';
 import './index.html';
 import './InfoTooltip';
 import preferencesJson from './preferences.json';
