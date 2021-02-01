@@ -1,16 +1,10 @@
-@import "variables";
+.csv-editor p {
+  margin-bottom: 1rem;
+}
 
-.csv-editor {
-
-  p {
-    margin-bottom: 1rem;
-  }
-
-  code {
-    margin-bottom: 1rem;
-    display: inline-block;
-  }
-
+.csv-editor code {
+  margin-bottom: 1rem;
+  display: inline-block;
 }
 
 .ce-open-button {
@@ -25,5 +19,5 @@
   resize: vertical;
   padding: 6px;
   font-family: monospace;
-  border: 1px solid $border-color;
+  border: 1px solid var(--border-color);
 }

@@ -1,0 +1,100 @@
+.main-header {
+  --actions-height: 80px;
+  --top-height: 50px;
+  --bottom-height: 30px;
+
+  height: var(--actions-height);
+  position: relative;
+
+}
+
+.main-header .top {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  height: var(--top-height);
+}
+
+.main-header .bottom {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+  height: var(--bottom-height);
+}
+
+.main-header .bottom button {
+  --height: 15px;
+  font-size: var(--height);
+  line-height: var(--height);
+}
+
+
+.container-selector {
+  flex-grow: 1;
+}
+
+.container-selector-item {
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+
+.container-selector-item > span {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.container-selector-item .icon {
+  width: 22px;
+  height: 22px;
+  mask-size: contain;
+  margin-right: 12px;
+  border-radius: 50%;
+}
+
+.container-selector-item .no-container-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.container-selector-item:hover {
+  background-color: var(--button-color);
+}
+
+.container-selector-selected {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28105,105,105%29'></polygon></svg>");
+  background-origin: content-box;
+  background-position: right 0.6rem center;
+  background-repeat: no-repeat;
+  background-size: 9px 6px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.container-selector-selected .container-selector-item:hover {
+  background: transparent;
+}
+
+.container-selector-list {
+  overflow: scroll;
+  max-height: 300px;
+  transition: max-height 0.25s ease;
+  border: 1px solid var(--border-color);
+  background-color: var(--white);
+  top: 2.8rem;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 1;
+  box-shadow: 2px 2px 12px var(--border-color);
+}
+
+.container-selector-list.collapsed {
+  max-height: 0;
+  border: 0;
+  box-shadow: none;
+  overflow: hidden;
+}

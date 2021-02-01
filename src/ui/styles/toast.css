@@ -1,5 +1,3 @@
-@import "variables";
-
 .toast {
   position: fixed;
   bottom: 0;
@@ -7,13 +5,14 @@
   right: 0;
   overflow: hidden;
   padding: 0.6rem 1rem;
-  transform: translate3d(0,0,0);
-  background: $toast-background-color;
-  color: $toast-text-color;
+  transform: translate3d(0, 0, 0);
+  background: var(--toast-background-color);
+  color: var(--toast-text-color);
   z-index: 100;
   transition: bottom 0.25s ease;
 
-  &.hide {
-    bottom: -10vh;
-  }
+}
+
+.toast.hide {
+  bottom: -10vh;
 }

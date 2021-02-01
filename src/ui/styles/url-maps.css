@@ -1,0 +1,34 @@
+.url-maps button {
+  margin-bottom: 1rem;
+}
+
+.url-map-item {
+  position: relative;
+  padding-bottom: 0.2rem;
+}
+
+.url-map-item > * {
+  font-size: 1rem;
+}
+
+.url-map-item input {
+  width: 100%;
+  padding-left: 6px;
+  padding-right: 24px;
+}
+
+.url-map-item button {
+  position: absolute;
+  right: 1px;
+  top: 1px;
+  width: 22px;
+  height: 21px;
+  padding: 0;
+  margin: 0;
+  transition: opacity 0.25s ease;
+  opacity: 0;
+}
+
+.url-map-item:hover button {
+  opacity: 1;
+}

@@ -1,0 +1,39 @@
+.container-action {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: var(--common-margin);
+  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  background: linear-gradient(to bottom, var(--gradient-top), var(--gradient-bottom));
+  z-index: 20;
+  transition: transform 0.25s ease;
+  transform: translateX(110%);
+}
+
+.container-action.active {
+  transform: unset;
+}
+
+.container-action .top {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-action .bottom {
+  display: flex;
+  justify-content: space-around;
+
+}
+
+.container-action .bottom .action-button {
+  line-height: 20px;
+  font-size: 20px;
+}
+
