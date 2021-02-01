@@ -2,6 +2,10 @@ import State from '../State/index.js';
 import ContextualIdentity, {NO_CONTAINER} from '../ContextualIdentity/index.js';
 import HostStorage from '../Storage/HostStorage.js';
 import Tabs from '../Tabs/index.js';
+import './actions/index.js';
+import './ContainerSelector.js';
+import './URLMaps.js';
+import './CSVEditor.js';
 
 State.setState({
   identities: [],
