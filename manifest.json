@@ -20,7 +20,7 @@
     "browser_style": true,
     "default_title": "Bifulushi",
     "default_popup": "src/ui/index.html",
-    "default_icon": "icons/icon.png"
+    "default_icon": "static/icons/icon.png"
   },
   "background": {
     "page": "src/background.html"
