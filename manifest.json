@@ -4,8 +4,8 @@
   "version": "3.7.0",
   "description": "Firefox extension to automatically open websites in a container",
   "icons": {
-    "48": "icons/icon.png",
-    "96": "icons/icon.png"
+    "48": "static/icons/icon.png",
+    "96": "static/icons/icon.png"
   },
   "permissions": [
     "contextualIdentities",
@@ -19,11 +19,11 @@
   "browser_action": {
     "browser_style": true,
     "default_title": "Bifulushi",
-    "default_popup": "ui/index.html",
+    "default_popup": "src/ui/index.html",
     "default_icon": "icons/icon.png"
   },
   "background": {
-    "scripts": ["index.js"]
+    "page": "src/background.html"
   },
   "applications": {
     "gecko": {
@@ -32,6 +32,6 @@
     }
   },
   "options_ui": {
-    "page": "ui-preferences/index.html"
+    "page": "src/ui-preferences/index.html"
   }
 }
