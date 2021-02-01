@@ -1,2 +1,2 @@
-import './CreateEditAction';
-import './DeleteAction';
+import './CreateEditAction.js';
+import './DeleteAction.js';

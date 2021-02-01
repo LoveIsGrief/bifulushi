@@ -1,4 +1,4 @@
-import punycode from 'punycode';
+import punycode from '/libs/punycode.js';
 
 export const PREFIX_REGEX = '@';
 export const PREFIX_GLOB = '!';

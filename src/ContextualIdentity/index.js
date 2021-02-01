@@ -1,5 +1,5 @@
-import HostStorage from '../Storage/HostStorage';
-import PreferenceStorage from '../Storage/PreferenceStorage';
+import HostStorage from '../Storage/HostStorage.js';
+import PreferenceStorage from '../Storage/PreferenceStorage.js';
 
 export const NO_CONTAINER = {
   name: 'No Container',

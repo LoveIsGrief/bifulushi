@@ -1,5 +1,5 @@
-import {matchesSavedMap, sortMaps} from '../utils';
-import PrefixStorage from './PrefixStorage';
+import {matchesSavedMap, sortMaps} from '../utils.js';
+import PrefixStorage from './PrefixStorage.js';
 
 class HostStorage extends PrefixStorage {
   constructor() {

@@ -1,6 +1,6 @@
-import {makeActionSelectedTrigger, setActiveAction} from './utils';
-import State from '../../State';
-import ContextualIdentities, {COLOR_MAP, COLORS, ICONS} from '../../ContextualIdentity';
+import {makeActionSelectedTrigger, setActiveAction} from './utils.js';
+import State from '../../State/index.js';
+import ContextualIdentities, {COLOR_MAP, COLORS, ICONS} from '../../ContextualIdentity/index.js';
 import {hideLoader, showLoader} from '../loader';
 
 const $container = document.querySelector('.container-action.action-create-edit');

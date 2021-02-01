@@ -1,4 +1,4 @@
-import PrefixStorage from './PrefixStorage';
+import PrefixStorage from './PrefixStorage.js';
 
 class PreferenceStorage extends PrefixStorage {
   constructor() {

@@ -1,13 +1,7 @@
-import './styles/style.scss';
-import './index.html';
-import State from '../State';
-import ContextualIdentity, {NO_CONTAINER} from '../ContextualIdentity';
-import HostStorage from '../Storage/HostStorage';
-import Tabs from '../Tabs';
-import './actions';
-import './ContainerSelector';
-import './URLMaps';
-import './CSVEditor';
+import State from '../State/index.js';
+import ContextualIdentity, {NO_CONTAINER} from '../ContextualIdentity/index.js';
+import HostStorage from '../Storage/HostStorage.js';
+import Tabs from '../Tabs/index.js';
 
 State.setState({
   identities: [],

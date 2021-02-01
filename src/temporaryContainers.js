@@ -1,8 +1,8 @@
 // Hoisted and adapted from https://gitlab.com/NamingThingsIsHard/firefox/click-to-contain
 
-import ContextualIdentities from './ContextualIdentity';
-import PreferenceStorage from './Storage/PreferenceStorage';
-import {filterByKey} from './utils';
+import ContextualIdentities from './ContextualIdentity/index.js';
+import PreferenceStorage from './Storage/PreferenceStorage.js';
+import {filterByKey} from './utils.js';
 
 // Prefer tracking tabs and their contexts to
 // calling browser.tabs.query with the contextId

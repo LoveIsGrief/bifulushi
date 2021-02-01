@@ -1,8 +1,8 @@
-import {formatString} from './utils';
-import HostStorage from './Storage/HostStorage';
-import ContextualIdentities, {NO_CONTAINER} from './ContextualIdentity';
-import ExtendedURL from './ExtendedURL';
-import PreferenceStorage from './Storage/PreferenceStorage';
+import {formatString} from './utils.js';
+import HostStorage from './Storage/HostStorage.js';
+import ContextualIdentities, {NO_CONTAINER} from './ContextualIdentity/index.js';
+import ExtendedURL from './ExtendedURL/index.js';
+import PreferenceStorage from './Storage/PreferenceStorage.js';
 
 export async function buildDefaultContainer(preferences, url) {
   url = new ExtendedURL(url);

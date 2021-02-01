@@ -1,4 +1,4 @@
-import {looksLikeIPv4} from '../utils';
+import {looksLikeIPv4} from '../utils.js';
 
 export default class ExtendedURL extends URL {
   constructor(url) {

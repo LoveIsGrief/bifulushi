@@ -1,7 +1,7 @@
-import {makeActionSelectedTrigger, setActiveAction} from './utils';
-import State from '../../State';
-import ContextualIdentities from '../../ContextualIdentity';
-import {showToast} from '../toast';
+import {makeActionSelectedTrigger, setActiveAction} from './utils.js';
+import State from '../../State.js';
+import ContextualIdentities from '../../ContextualIdentity/index.js';
+import {showToast} from '../toast.js';
 
 const $container = document.querySelector('.container-action.action-delete');
 
