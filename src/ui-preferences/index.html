@@ -6,6 +6,7 @@
       <link rel="stylesheet" href="styles/index.css"/>
       <link rel="stylesheet" href="styles/tab_container.css"/>
       <link rel="stylesheet" href="styles/card.css"/>
+      <link rel="stylesheet" href="styles/toggle-preference.css"/>
     <script src="main.js" type="module"></script>
 </head>
 <body>
@@ -18,18 +19,31 @@
         <div v-show="isActive('preferences')" class="tab-container__content ">
             <div class="header">
                 <div class="card" small>
-                    <toggle-preference active>
+                    <toggle-preference
+                            id="wtf"
+                            preference="matchDomainOnly"
+                            description="When matching rules to a URL, only use the domain as criteria"
+                    >
                         Match Domain only
                     </toggle-preference>
                 </div>
                 <div class="card" small>
-                    <toggle-preference>
+                    <toggle-preference
+                            id="fuckyou"
+                            preference="keepOldTabs"
+                            description="After a contained tab has been created, the old won't be closed"
+                    >
                         Keep old tabs
                     </toggle-preference>
                 </div>
             </div>
             <div class="card">
-                <toggle-preference>
+                <toggle-preference
+
+                        id="mother"
+                        preference="defaultContainer"
+                        description="Which container unmatched URLs will end up in"
+                >
                     Default Container
                 </toggle-preference>
 
@@ -76,7 +90,24 @@
             </div>
     </div>
 
+<script type="x-template" id="toggle-preference">
+    <div class="toggle-preference" >
+        <input id="switch" type="checkbox" v-model="value">
+        <label for="switch" class="toggle-container">
+            <div class="toggle">
+                <div class="toggle__indicator"></div>
+            </div>
+        </label>
+        <div class="text-container">
+            <div class="text-container__label">
+                <slot></slot>
+            </div>
+        </div>
+
+    </div>
+</script>
 </div>
+
 
 </body>
 </html>
