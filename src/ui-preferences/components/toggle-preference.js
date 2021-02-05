@@ -1,6 +1,7 @@
+import Vue from "/libs/vue.min.js";
 import PreferenceStorage from '/src/Storage/PreferenceStorage.js';
 
-export default {
+Vue.component("toggle-preference", {
   props: [
     'preference',
     'label',
@@ -9,29 +10,26 @@ export default {
   template: '#toggle-preference',
   data() {
     return {
-      value: null
+      value: false,
     }
   },
   async created(){
-    console.log("preference", this.preference)
     this.value = await PreferenceStorage.get(this.preference, true);
   },
   watch:{
-    // FIXME: Somehow, always the same preference is being triggered
     async value(newValue, oldValue){
-      console.log(this)
-      console.log("preference", this.preference)
-      if(!this.preference){
-        return
-      }
       await PreferenceStorage.set({
         key: this.preference,
         value: newValue,
       })
     },
   },
-  methods:{
-    async save(){
+  methods: {
+    classes(){
+      return [
+        "toggle-container",
+        this.value ? "toggle-container--active": ""
+      ]
     }
   }
-};
+})

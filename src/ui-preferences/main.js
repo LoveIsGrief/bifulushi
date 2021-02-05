@@ -1,13 +1,10 @@
 import Vue from '/libs/vue.min.js';
-import TogglePreference from "./components/toggle-preference.js";
+import "./components/toggle-preference.js";
 
 const app = new Vue({
   el: '#preference-app',
   data: {
     activeTab: 'preferences',
-  },
-  components: {
-    "toggle-preference": TogglePreference,
   },
   methods: {
     isActive(tabName) {
@@ -22,4 +19,3 @@ const app = new Vue({
   },
 });
 
-// app.component("toggle-preference", TogglePreference)

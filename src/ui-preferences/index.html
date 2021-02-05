@@ -20,7 +20,6 @@
             <div class="header">
                 <div class="card" small>
                     <toggle-preference
-                            id="wtf"
                             preference="matchDomainOnly"
                             description="When matching rules to a URL, only use the domain as criteria"
                     >
@@ -29,7 +28,6 @@
                 </div>
                 <div class="card" small>
                     <toggle-preference
-                            id="fuckyou"
                             preference="keepOldTabs"
                             description="After a contained tab has been created, the old won't be closed"
                     >
@@ -39,8 +37,6 @@
             </div>
             <div class="card">
                 <toggle-preference
-
-                        id="mother"
                         preference="defaultContainer"
                         description="Which container unmatched URLs will end up in"
                 >
@@ -92,12 +88,11 @@
 
 <script type="x-template" id="toggle-preference">
     <div class="toggle-preference" >
-        <input id="switch" type="checkbox" v-model="value">
-        <label for="switch" class="toggle-container">
+        <div @click="value=!value" :class="classes()">
             <div class="toggle">
                 <div class="toggle__indicator"></div>
             </div>
-        </label>
+        </div>
         <div class="text-container">
             <div class="text-container__label">
                 <slot></slot>

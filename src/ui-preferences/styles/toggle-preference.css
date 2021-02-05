@@ -3,11 +3,7 @@
     justify-content: flex-start;
 }
 
-.toggle-preference:hover{
-    background: red;
-}
-
-.toggle-preference #switch {
+.toggle-preference input {
     position: absolute;
     opacity: 0;
 }
@@ -30,7 +26,7 @@
 
 }
 
-.toggle-preference #switch:checked ~ .toggle-container .toggle__indicator {
+.toggle-preference .toggle-container--active .toggle__indicator {
     background: transparent linear-gradient(133deg, #16b1ff 0%, #0979ff 100%) 0% 0% no-repeat;
     margin-left: 40px;
     border-color: #16b1ff;
@@ -69,10 +65,10 @@
     font-weight: bold;
 }
 
-.toggle-preference #switch:checked ~ .text-container .text-container__label {
+.toggle-preference .toggle-container--active ~ .text-container .text-container__label {
     color: #0F91FA;
 }
 
-.toggle-preference #switch:checked ~ .text-container .text-container__label:after {
+.toggle-preference .toggle-container--active ~ .text-container .text-container__label:after {
     content: 'On';
 }
