@@ -5,6 +5,7 @@
     <title>bifulushi preferences</title>
       <link rel="stylesheet" href="styles/index.css"/>
       <link rel="stylesheet" href="styles/tab_container.css"/>
+      <link rel="stylesheet" href="styles/card.css"/>
     <script src="main.js" type="module"></script>
 </head>
 <body>
@@ -15,21 +16,39 @@
             <span @click="activeTab = 'containers'" :class="getTabClasses('containers')">Containers</span>
         </div>
         <div v-show="isActive('preferences')" class="tab-container__content ">
-                <div class="toggle-preference">
-                    <div class="toggle">Toggle</div>
-                    <div class="title">Match domain only</div>
+            <div class="header">
+                <div class="card" small>
+                    <toggle-preference active>
+                        Match Domain only
+                    </toggle-preference>
                 </div>
-                <div class="toggle-preference">
-                    <div class="toggle">Toggle</div>
-                    <div class="title">Keep old tabs</div>
-                </div>
-                <div class="toggle-preference">
-                    <div class="toggle">Toggle</div>
-                    <div class="title">Default container</div>
-                    <div class="toggle-preference__content">
-                    </div>
+                <div class="card" small>
+                    <toggle-preference>
+                        Keep old tabs
+                    </toggle-preference>
                 </div>
             </div>
+            <div class="card">
+                <toggle-preference>
+                    Default Container
+                </toggle-preference>
+
+                <preference-field header="Container name">
+                    <input type="text"/>
+                </preference-field>
+
+                <preference-field header="Lifetime">
+                    <radio-preferences
+                            radio-forever="Forever"
+                            radio-last="Until last tab closed"
+                            default-radio="radio-last"
+                    />
+                </preference-field>
+                <preference-field header="Rule addition">
+                    <input type="text"/>
+                </preference-field>
+            </div>
+        </div>
         <div v-show="isActive('containers')" class="tab-container__content">
                 <div class="container-preference">
                     <header>Shopping</header>
