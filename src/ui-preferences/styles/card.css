@@ -22,16 +22,16 @@
     flex-grow: 0.5;
 }
 
-/* Forced equidistant spacing between slotted elements */
-.card *:nth-child(n+2):nth-last-child(n+2) {
+/* Forced equidistant spacing between contained elements */
+.card > *:nth-child(n+2):nth-last-child(n+2) {
     margin-bottom: var(--child-v-margin);
 }
 
-.card *:first-child {
+.card > *:first-child {
     margin-top: var(--child-v-margin);
     margin-bottom: var(--child-v-margin);
 }
 
-.card *:nth-last-child(1) {
+.card > *:nth-last-child(1) {
     margin-bottom: var(--child-v-margin);
 }
