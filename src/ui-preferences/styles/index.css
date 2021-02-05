@@ -1,43 +1,10 @@
 /*BEM is used for classes*/
 /*https://en.bem.info/methodology/quick-start/*/
-body {
+
+:root {
   --border-radius: 20px;
   --small-border-radius: 12px;
   --background-color: #ebf2fa;
-
-  position: absolute;
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  background: var(--background-color) 0% 0% no-repeat padding-box;
-
-  display: flex;
-  flex-direction: column;
-
-}
-
-tab-content {
-  flex-direction: column;
-}
-
-tab-content[tab-title="Preferences"] > div {
-  display: flex;
-}
-
-tab-content[tab-title="Containers"] {
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-content: flex-start;
-  align-items: baseline;
-}
-
-tab-container {
-  position: relative;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
 }
 
 input[type="text"] {

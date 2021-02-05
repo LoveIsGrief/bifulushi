@@ -16,6 +16,7 @@
     "storage",
     "<all_urls>"
   ],
+  "content_security_policy": "script-src 'unsafe-eval' 'self'; object-src 'self'",
   "browser_action": {
     "browser_style": true,
     "default_title": "Bifulushi",
