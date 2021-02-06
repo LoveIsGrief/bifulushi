@@ -10,14 +10,21 @@ export default Vue.extend({
   template: '#TODO',
   data() {
     return {
-      value: false,
+      value: undefined,
     }
   },
   async created() {
-    this.value = await PreferenceStorage.get(this.preference, true);
+    const value = await PreferenceStorage.get(this.preference, true);
+    if(value === undefined){
+      console.debug(`Preference ${this.preference} doesn't have a stored value`)
+      return
+    }
+    this.value = value;
+    console.debug(`Loaded preference ${this.preference}`, this.value)
   },
   watch: {
     async value(newValue, oldValue) {
+      console.debug(`Setting preference ${this.preference}`, newValue, oldValue)
       await PreferenceStorage.set({
         key: this.preference,
         value: newValue,

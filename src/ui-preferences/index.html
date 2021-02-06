@@ -8,6 +8,7 @@
       <link rel="stylesheet" href="styles/card.css"/>
       <link rel="stylesheet" href="styles/input-preference.css"/>
       <link rel="stylesheet" href="styles/info-tooltip.css"/>
+      <link rel="stylesheet" href="styles/radio-preference.css"/>
       <link rel="stylesheet" href="styles/toggle-preference.css"/>
     <script src="main.js" type="module"></script>
 </head>
@@ -50,13 +51,14 @@
                         It's possible to use variables here
                     </input-preference>
 
-                    <preference-field header="Lifetime">
-                        <radio-preferences
-                                radio-forever="Forever"
-                                radio-last="Until last tab closed"
-                                default-radio="radio-last"
-                        />
-                    </preference-field>
+                    <radio-preference
+                            preference="defaltContainer.lifetime"
+                            label="Lifetime"
+                            description="How long a container will live"
+
+                            radio-forever="Forever"
+                            radio-last="Until last tab closed"
+                            default-radio="last"></radio-preference>
                     <input-preference
                             preference="defaultContainer.ruleAddition"
                             label="Rule addition"
@@ -128,6 +130,19 @@
             {{label}}
         </header>
         <input :type="type" v-model="value">
+    </div>
+</script>
+<script type="x-template" id="radio-preference">
+    <div class="radio-preference">
+        <div class="radio-preference__header">
+            <info-tooltip>{{ description }}</info-tooltip>
+            {{ label }}
+        </div>
+        <label v-for="choice in choices" class="radio-container">
+            <input type="radio" :name="name" v-model="value" :value="choice.value">
+            <span class="radio-container__overlay"></span>
+            <span class="radio-container__label">{{ choice.label }}</span>
+        </label>
     </div>
 </script>
 

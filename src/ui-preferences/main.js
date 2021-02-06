@@ -1,7 +1,8 @@
-import Vue from '/libs/vue.min.js';
 import "./components/toggle-preference.js";
 import "./components/info-tooltip.js";
 import "./components/input-preference.js";
+import "./components/radio-preference.js";
+import Vue from '/libs/vue.min.js';
 
 const app = new Vue({
   el: '#preference-app',
