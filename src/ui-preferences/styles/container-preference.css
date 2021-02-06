@@ -13,6 +13,8 @@
     border-radius: 20px;
     padding: var(--padding);
 
+    margin: var(--page-margin);
+
     flex-grow: 0;
     flex-shrink: 1;
 

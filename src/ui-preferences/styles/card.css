@@ -10,7 +10,7 @@
 
     padding-left: var(--h-padding);
     padding-right: var(--h-padding);
-    margin: 10px;
+    margin: var(--page-margin);
 
     background: #ebf2fa 0% 0% no-repeat padding-box;
     box-shadow: 4px 2px 16px #5f9de77a;
