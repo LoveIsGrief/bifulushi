@@ -1,13 +1,17 @@
-import "./components/toggle-preference.js";
+import "./components/container-preference.js";
 import "./components/info-tooltip.js";
 import "./components/input-preference.js";
 import "./components/radio-preference.js";
+import "./components/toggle-preference.js";
 import Vue from '/libs/vue.min.js';
+
+import ContextualIdentities from "/src/ContextualIdentity/index.js"
 
 const app = new Vue({
   el: '#preference-app',
   data: {
-    activeTab: 'preferences',
+    activeTab: 'containers',
+    containers: [],
   },
   methods: {
     isActive(tabName) {
@@ -20,5 +24,8 @@ const app = new Vue({
       ]
     },
   },
+  async beforeCreate() {
+    this.containers = await ContextualIdentities.get()
+  }
 });
 

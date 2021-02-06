@@ -19,3 +19,15 @@ input[type="text"] {
   width: 100%;
   padding: 10px;
 }
+
+.tab-container__content {
+  display: flex;
+}
+
+#tab-content__containers{
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: baseline;
+}

@@ -1,0 +1,67 @@
+.container-preference {
+    --icon-size: 36px;
+    --padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    align-content: baseline;
+
+    position: relative;
+    background: #EBF2FA 0% 0% no-repeat padding-box;
+    box-shadow: 4px 2px 16px #5F9DE77A;
+    border: 2px solid #98CDFA;
+    border-radius: 20px;
+    padding: var(--padding);
+
+    flex-grow: 0;
+    flex-shrink: 1;
+
+    flex-basis: 30%;
+    transition-property: flex-grow, height, flex-basis;
+    transition-duration: 1s;
+}
+
+.container-preference__header {
+    text-align: left;
+    letter-spacing: 0.31px;
+    color: #0F91FA;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-right: calc(var(--icon-size) + var(--padding));
+}
+
+.container-preference .input-preference__icon {
+    position: absolute;
+    right: var(--padding);
+    top: var(--padding);
+    height: var(--icon-size);
+    width: var(--icon-size);
+    background-image: url('/src/ui-preferences/cog.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.container-preference__content {
+    position: relative;
+    overflow: hidden;
+
+    /* Animated properties */
+    max-height: 0;
+    padding-top: 10px;
+    transition-property: max-height, border-top-width;
+    transition-duration: 1s;
+}
+
+/* Handles opening and closing the drawer */
+.container-preference.open {
+    flex-basis: 100%;
+}
+
+.container-preference.open .container-preference__content {
+    overflow: auto;
+    border-top-width: 2px;
+    border-top-style: solid;
+    border-top-color: #98CDFA;
+
+    max-height: 300px;
+}

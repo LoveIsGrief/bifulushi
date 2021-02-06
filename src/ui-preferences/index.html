@@ -6,6 +6,7 @@
       <link rel="stylesheet" href="styles/index.css"/>
       <link rel="stylesheet" href="styles/tab_container.css"/>
       <link rel="stylesheet" href="styles/card.css"/>
+      <link rel="stylesheet" href="styles/container-preference.css"/>
       <link rel="stylesheet" href="styles/input-preference.css"/>
       <link rel="stylesheet" href="styles/info-tooltip.css"/>
       <link rel="stylesheet" href="styles/radio-preference.css"/>
@@ -19,7 +20,7 @@
             <span @click="activeTab = 'preferences'" :class="getTabClasses('preferences')">Preferences</span>
             <span @click="activeTab = 'containers'" :class="getTabClasses('containers')">Containers</span>
         </div>
-        <div v-show="isActive('preferences')" class="tab-container__content ">
+        <div v-show="isActive('preferences')" id="tab-content__preferences" class="tab-container__content">
             <div class="header">
                 <div class="card" small>
                     <toggle-preference
@@ -69,30 +70,12 @@
                 </toggle-preference>
             </div>
         </div>
-        <div v-show="isActive('containers')" class="tab-container__content">
-                <div class="container-preference">
-                    <header>Shopping</header>
-                    <div for="toggle" class="input-preference__icon"></div>
-                    <div class="splitter"></div>
-                    <div class="container-preference__content">
-                        <div class="preference-field">
-                            <header>Lifetime</header>
-                            <div class="radio-preferences">
-                                <!-- TODO generate unique ID -->
-                                <label id="rc-1" class="radio-container">
-                                    <input type="radio" name="radio-lifetime-1">
-                                    <span class="radio-container__overlay"></span>
-                                    <span class="radio-container__label">Forever</span>
-                                </label>
-                                <label id="rc-2" class="radio-container">
-                                    <input type="radio" name="radio-lifetime-2">
-                                    <span class="radio-container__overlay"></span>
-                                    <span class="radio-container__label">Until last tab closed</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div v-show="isActive('containers')" id="tab-content__containers" class="tab-container__content">
+            <container-preference
+                    v-for="container in containers"
+                    :key="container.cookieStoreId"
+                    :container="container"
+            ></container-preference>
         </div>
     </div>
 </div>
@@ -115,6 +98,25 @@
             <slot></slot>
         </div>
         <info-tooltip>{{ description }}</info-tooltip>
+    </div>
+</script>
+<script type="x-template" id="container-preference">
+    <div :class="classes">
+        <div class="container-preference__header">{{ container.name }}</div>
+        <div @click="open=!open" class="input-preference__icon"></div>
+
+        <div class="splitter"></div>
+
+        <div class="container-preference__content">
+            <radio-preference
+                    :preference="lifetimePreferenceName"
+                    label="Lifetime"
+                    description="How long a container will live"
+
+                    radio-forever="Forever"
+                    radio-last="Until last tab closed"
+                    default-radio="last"></radio-preference>
+        </div>
     </div>
 </script>
 <script type="x-template" id="info-tooltip">
