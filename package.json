@@ -21,6 +21,7 @@
     "web-ext": "^5.5.0"
   },
   "dependencies": {
+    "marked": "^1.2.9",
     "punycode": "^2.1.1",
     "vue": "^2.6.12"
   }

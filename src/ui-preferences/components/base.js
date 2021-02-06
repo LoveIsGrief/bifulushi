@@ -6,6 +6,7 @@ export default Vue.extend({
     'preference',
     'label',
     'description',
+    'docUrl',
   ],
   template: '#TODO',
   data() {

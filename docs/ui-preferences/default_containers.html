@@ -1,14 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+    <script src="/libs/marked.min.js"></script>
+    <script src="index.js" defer></script>
+</header>
+<body>
+<div class="markdown">
 # Default containers
 
-The container into which tabs will be placed that cannot be placed into any other container. 
-In other words, if a tab opens or updates its URL to one that cannot be matched by a rule in the extension, 
+The container into which tabs will be placed that cannot be placed into any other container.
+In other words, if a tab opens or updates its URL to one that cannot be matched by a rule in the extension,
  it will be put into a default container according to the preferences listed below.
 
 ## Preferences
 
-The title of the group, as seen by the user, will be **Default container**. 
-The entire group can be toggled on or off. 
-If off, nothing will be done with unmatched URLs. 
+The title of the group, as seen by the user, will be **Default container**.
+The entire group can be toggled on or off.
+If off, nothing will be done with unmatched URLs.
 
 Once activated the following preferences will come into effect:
 
@@ -54,3 +62,6 @@ Examples:
 |  https://example.com       |  \*.example.* | *.example.com    |  example.com       |
 | https://old.example.com    | \*.example.*  | *.example.com    | old.example.com    |
 | https://an.old.example.com | \*.example.*  | *.example.com    | an.old.example.com |
+</div>
+</body>
+</html>

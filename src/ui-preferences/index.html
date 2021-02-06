@@ -27,6 +27,7 @@
                             preference="matchDomainOnly"
                             label="Match Domain only"
                             description="When matching rules to a URL, only use the domain as criteria"
+                            doc-url="/docs/ui-preferences/matchDomainOnly.html"
                     ></toggle-preference>
                 </div>
                 <div class="card" small>
@@ -49,6 +50,7 @@
                         preference="defaultContainer"
                         label="Default Container"
                         description="Which container unmatched URLs will end up in"
+                        doc-url="/docs/ui-preferences/default_containers.html"
                 >
                     <input-preference
                             preference="defaultContainer.containerName"
@@ -99,6 +101,12 @@
                 <div class="text-container__label">
                     {{ label }}
                 </div>
+                <a
+                        v-show.once="docUrl"
+                        class="pref-doc"
+                        :href="docUrl"
+                        target="_blank"
+                >?</a>
             </div>
         </div>
         <div class="toggle-preference__content">

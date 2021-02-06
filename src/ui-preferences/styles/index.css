@@ -7,6 +7,7 @@
   --background-color: #ebf2fa;
   --common-margin: 5px;
   --page-margin: 10px;
+  --link-color: #599dd9;
 }
 
 body {
@@ -32,4 +33,17 @@ input[type="text"] {
   justify-content: flex-start;
   align-content: flex-start;
   align-items: baseline;
+}
+
+.pref-doc {
+  --size: 15px;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  width: var(--size);
+  height: var(--size);
+  line-height: var(--size);
+  font-size: var(--size);
+  text-align: center;
+  color: var(--link-color);
 }
