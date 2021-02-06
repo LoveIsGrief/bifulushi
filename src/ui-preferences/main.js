@@ -10,7 +10,7 @@ import ContextualIdentities from "/src/ContextualIdentity/index.js"
 const app = new Vue({
   el: '#preference-app',
   data: {
-    activeTab: 'containers',
+    activeTab: 'preferences',
     containers: [],
   },
   methods: {
