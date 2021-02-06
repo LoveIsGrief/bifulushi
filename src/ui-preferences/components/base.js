@@ -1,13 +1,27 @@
-export class BaseCustomElement extends HTMLElement {
-  constructor() {
-    super();
-    this._shadowRoot = null;
-  }
-  _makeShadowRoot(templateId) {
-    let template = document.getElementById(templateId);
-    let templateContent = template.content;
+import Vue from '/libs/vue.min.js';
+import PreferenceStorage from '/src/Storage/PreferenceStorage.js';
 
-    this._shadowRoot = this.attachShadow({mode: 'closed'});
-    this._shadowRoot.appendChild(templateContent.cloneNode(true));
-  }
-}
+export default Vue.extend({
+  props: [
+    'preference',
+    'label',
+    'description',
+  ],
+  template: '#TODO',
+  data() {
+    return {
+      value: false,
+    }
+  },
+  async created() {
+    this.value = await PreferenceStorage.get(this.preference, true);
+  },
+  watch: {
+    async value(newValue, oldValue) {
+      await PreferenceStorage.set({
+        key: this.preference,
+        value: newValue,
+      })
+    },
+  },
+});

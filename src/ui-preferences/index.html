@@ -6,6 +6,7 @@
       <link rel="stylesheet" href="styles/index.css"/>
       <link rel="stylesheet" href="styles/tab_container.css"/>
       <link rel="stylesheet" href="styles/card.css"/>
+      <link rel="stylesheet" href="styles/input-preference.css"/>
       <link rel="stylesheet" href="styles/toggle-preference.css"/>
     <script src="main.js" type="module"></script>
 </head>
@@ -21,31 +22,36 @@
                 <div class="card" small>
                     <toggle-preference
                             preference="matchDomainOnly"
-                            description="When matching rules to a URL, only use the domain as criteria"
+                            label="Match Domain only"
                     >
-                        Match Domain only
+                        When matching rules to a URL, only use the domain as criteria
                     </toggle-preference>
                 </div>
                 <div class="card" small>
                     <toggle-preference
                             preference="keepOldTabs"
-                            description="After a contained tab has been created, the old won't be closed"
+                            label="Keep old tabs"
                     >
-                        Keep old tabs
+                        After a contained tab has been created, the old won't be closed
                     </toggle-preference>
                 </div>
             </div>
             <div class="card">
                 <toggle-preference
                         preference="defaultContainer"
-                        description="Which container unmatched URLs will end up in"
+                        label="Default Container"
                 >
-                    Default Container
+                    Which container unmatched URLs will end up in
                 </toggle-preference>
 
-                <preference-field header="Container name">
-                    <input type="text"/>
-                </preference-field>
+                <input-preference
+                        preference="defaultContainer.containerName"
+                        label="Container name"
+                        type="text"
+                >
+                    What the name of the default container will be.
+                    It's possible to use variables here
+                </input-preference>
 
                 <preference-field header="Lifetime">
                     <radio-preferences
@@ -54,9 +60,13 @@
                             default-radio="radio-last"
                     />
                 </preference-field>
-                <preference-field header="Rule addition">
-                    <input type="text"/>
-                </preference-field>
+                <input-preference
+                        preference="defaultContainer.ruleAddition"
+                        label="Rule addition"
+                        type="text"
+                >
+                    The rule to be added to this container once a domain is matched (can be empty)
+                </input-preference>
             </div>
         </div>
         <div v-show="isActive('containers')" class="tab-container__content">
@@ -83,8 +93,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+        </div>
     </div>
+</div>
 
 <script type="x-template" id="toggle-preference">
     <div class="toggle-preference" >
@@ -95,13 +106,18 @@
         </div>
         <div class="text-container">
             <div class="text-container__label">
-                <slot></slot>
+                {{ label }}
             </div>
         </div>
 
     </div>
 </script>
-</div>
+<script type="x-template" id="input-preference">
+    <div class="input-preference">
+        <header>{{label}}</header>
+        <input :type="type" v-model="value">
+    </div>
+</script>
 
 
 </body>
