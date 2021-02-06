@@ -24,50 +24,47 @@
                     <toggle-preference
                             preference="matchDomainOnly"
                             label="Match Domain only"
-                    >
-                        When matching rules to a URL, only use the domain as criteria
-                    </toggle-preference>
+                            description="When matching rules to a URL, only use the domain as criteria"
+                    ></toggle-preference>
                 </div>
                 <div class="card" small>
                     <toggle-preference
                             preference="keepOldTabs"
                             label="Keep old tabs"
-                    >
-                        After a contained tab has been created, the old won't be closed
-                    </toggle-preference>
+                            description="After a contained tab has been created, the old won't be closed"
+                    ></toggle-preference>
                 </div>
             </div>
             <div class="card">
                 <toggle-preference
                         preference="defaultContainer"
                         label="Default Container"
+                        description="Which container unmatched URLs will end up in"
                 >
-                    Which container unmatched URLs will end up in
+                    <input-preference
+                            preference="defaultContainer.containerName"
+                            label="Container name"
+                            type="text"
+                    >
+                        What the name of the default container will be.
+                        It's possible to use variables here
+                    </input-preference>
+
+                    <preference-field header="Lifetime">
+                        <radio-preferences
+                                radio-forever="Forever"
+                                radio-last="Until last tab closed"
+                                default-radio="radio-last"
+                        />
+                    </preference-field>
+                    <input-preference
+                            preference="defaultContainer.ruleAddition"
+                            label="Rule addition"
+                            type="text"
+                    >
+                        The rule to be added to this container once a domain is matched (can be empty)
+                    </input-preference>
                 </toggle-preference>
-
-                <input-preference
-                        preference="defaultContainer.containerName"
-                        label="Container name"
-                        type="text"
-                >
-                    What the name of the default container will be.
-                    It's possible to use variables here
-                </input-preference>
-
-                <preference-field header="Lifetime">
-                    <radio-preferences
-                            radio-forever="Forever"
-                            radio-last="Until last tab closed"
-                            default-radio="radio-last"
-                    />
-                </preference-field>
-                <input-preference
-                        preference="defaultContainer.ruleAddition"
-                        label="Rule addition"
-                        type="text"
-                >
-                    The rule to be added to this container once a domain is matched (can be empty)
-                </input-preference>
             </div>
         </div>
         <div v-show="isActive('containers')" class="tab-container__content">
@@ -100,17 +97,22 @@
 
 <script type="x-template" id="toggle-preference">
     <div class="toggle-preference" >
-        <div @click="value=!value" :class="classes()">
-            <div class="toggle">
-                <div class="toggle__indicator"></div>
+        <div class="toggle-preference__header">
+            <div @click="value=!value" :class="classes()">
+                <div class="toggle">
+                    <div class="toggle__indicator"></div>
+                </div>
+            </div>
+            <div class="text-container">
+                <div class="text-container__label">
+                    {{ label }}
+                </div>
             </div>
         </div>
-        <div class="text-container">
-            <div class="text-container__label">
-                {{ label }}
-            </div>
+        <div class="toggle-preference__content">
+            <slot></slot>
         </div>
-
+        <info-tooltip>{{ description }}</info-tooltip>
     </div>
 </script>
 <script type="x-template" id="info-tooltip">
@@ -122,8 +124,8 @@
 <script type="x-template" id="input-preference">
     <div class="input-preference">
         <header>
-            {{label}}
             <info-tooltip><slot></slot></info-tooltip>
+            {{label}}
         </header>
         <input :type="type" v-model="value">
     </div>

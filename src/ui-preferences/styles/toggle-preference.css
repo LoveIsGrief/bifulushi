@@ -1,11 +1,6 @@
-.toggle-preference {
+.toggle-preference__header {
     display: flex;
     justify-content: flex-start;
-}
-
-.toggle-preference input {
-    position: absolute;
-    opacity: 0;
 }
 
 .toggle-preference .toggle-container {
@@ -71,4 +66,20 @@
 
 .toggle-preference .toggle-container--active ~ .text-container .text-container__label:after {
     content: 'On';
+}
+
+.toggle-preference__content {
+    display: flex;
+    flex-grow: 2;
+    flex-direction: column;
+}
+
+.toggle-preference__content > *:first-child {
+    margin-top: var(--child-v-margin)
+}
+
+.toggle-preference > .info-tooltip {
+    position: absolute;
+    left: var(--common-margin);
+    top: var(--common-margin);
 }

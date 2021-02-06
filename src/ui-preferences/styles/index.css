@@ -5,6 +5,7 @@
   --border-radius: 20px;
   --small-border-radius: 12px;
   --background-color: #ebf2fa;
+  --common-margin: 5px;
 }
 
 input[type="text"] {
