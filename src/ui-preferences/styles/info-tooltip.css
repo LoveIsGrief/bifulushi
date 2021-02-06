@@ -36,9 +36,7 @@
     border-radius: 10px;
     opacity: 0;
     transition: 0.6s all;
-    position: absolute;
-    bottom: 20px;
-    left: 10px;
+    position: fixed;
     z-index: 3;
     pointer-events: none;
 }
