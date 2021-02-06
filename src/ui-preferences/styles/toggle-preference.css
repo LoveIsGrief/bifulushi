@@ -74,8 +74,14 @@
     flex-direction: column;
 }
 
+/* Forced equidistant spacing between contained elements */
+.toggle-preference__content > *:nth-child(n+2):nth-last-child(n+2) {
+    padding-bottom: var(--child-v-margin);
+}
+
 .toggle-preference__content > *:first-child {
-    margin-top: var(--child-v-margin)
+    padding-top: var(--child-v-margin);
+    padding-bottom: var(--child-v-margin);
 }
 
 .toggle-preference > .info-tooltip {
