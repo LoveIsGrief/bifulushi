@@ -8,6 +8,10 @@
   --common-margin: 5px;
 }
 
+body {
+  padding-top: 1.5em;
+}
+
 input[type="text"] {
   background: #FDFEFF 0% 0% no-repeat padding-box;
   border: 1px solid #7E97B84D;
