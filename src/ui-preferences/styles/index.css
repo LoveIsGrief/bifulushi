@@ -22,6 +22,7 @@ input[type="text"] {
 
 .tab-container__content {
   display: flex;
+  flex-direction: column;
 }
 
 #tab-content__containers{
