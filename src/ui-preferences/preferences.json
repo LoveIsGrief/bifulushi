@@ -1,8 +1,0 @@
-[
-  {
-    "type": "bool",
-    "name": "caseSensitiveMatch",
-    "label": "Case sensitive matching",
-    "description": "The upper and lower case will be important when matching rules"
-  }
-]
