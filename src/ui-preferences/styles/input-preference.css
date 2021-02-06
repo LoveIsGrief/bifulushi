@@ -4,23 +4,3 @@
     text-transform: uppercase;
     font-weight: bold;
 }
-
-.input-preference > header::after {
-    --size: 12px;
-    content: "i";
-    vertical-align: center;
-
-    position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-
-    color: var(--background-color);
-    background: gray;
-    border-radius: var(--size);
-    line-height: var(--size);
-    font-size: var(--size);
-    width: var(--size);
-    height: var(--size);
-    text-align: center;
-    padding: 1px;
-    text-transform: initial;
-}

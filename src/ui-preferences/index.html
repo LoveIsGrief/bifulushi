@@ -7,6 +7,7 @@
       <link rel="stylesheet" href="styles/tab_container.css"/>
       <link rel="stylesheet" href="styles/card.css"/>
       <link rel="stylesheet" href="styles/input-preference.css"/>
+      <link rel="stylesheet" href="styles/info-tooltip.css"/>
       <link rel="stylesheet" href="styles/toggle-preference.css"/>
     <script src="main.js" type="module"></script>
 </head>
@@ -72,7 +73,7 @@
         <div v-show="isActive('containers')" class="tab-container__content">
                 <div class="container-preference">
                     <header>Shopping</header>
-                    <div for="toggle" class="icon"></div>
+                    <div for="toggle" class="input-preference__icon"></div>
                     <div class="splitter"></div>
                     <div class="container-preference__content">
                         <div class="preference-field">
@@ -112,9 +113,18 @@
 
     </div>
 </script>
+<script type="x-template" id="info-tooltip">
+    <span class="info-tooltip">
+        <span class="info-tooltip__icon">i</span>
+        <span class="info-tooltip__info"><slot></slot></span>
+    </span>
+</script>
 <script type="x-template" id="input-preference">
     <div class="input-preference">
-        <header>{{label}}</header>
+        <header>
+            {{label}}
+            <info-tooltip><slot></slot></info-tooltip>
+        </header>
         <input :type="type" v-model="value">
     </div>
 </script>

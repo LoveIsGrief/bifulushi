@@ -1,5 +1,6 @@
 import Vue from '/libs/vue.min.js';
 import "./components/toggle-preference.js";
+import "./components/info-tooltip.js";
 import "./components/input-preference.js";
 
 const app = new Vue({
