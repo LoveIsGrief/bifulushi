@@ -90,16 +90,16 @@ lint:dubnium:
 ##############
 # Unit tests
 
-#unit_test:
-#  <<: *tests
-#
-#unit_test:erbium:
-#  <<: *tests
-#  image: "node:erbium"
-#
-#unit_test:dubnium:
-#  <<: *tests
-#  image: "node:dubnium"
+unit_test:
+  <<: *tests
+
+unit_test:erbium:
+  <<: *tests
+  image: "node:erbium"
+
+unit_test:dubnium:
+  <<: *tests
+  image: "node:dubnium"
 
 ##############
 # Audits
