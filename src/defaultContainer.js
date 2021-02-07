@@ -1,8 +1,9 @@
-import {formatString} from './utils';
-import HostStorage from './Storage/HostStorage';
-import ContextualIdentities, {NO_CONTAINER} from './ContextualIdentity';
-import ExtendedURL from './ExtendedURL';
-import PreferenceStorage from './Storage/PreferenceStorage';
+import {formatString} from './utils.js';
+import HostStorage from './Storage/HostStorage.js';
+import ContextualIdentities, {NO_CONTAINER} from './ContextualIdentity/index.js';
+import ExtendedURL from './ExtendedURL/index.js';
+import PreferenceStorage from './Storage/PreferenceStorage.js';
+import {DEFAULT_CONTAINER_LIFETIME} from './constants.js';
 
 export async function buildDefaultContainer(preferences, url) {
   url = new ExtendedURL(url);
@@ -47,8 +48,9 @@ export async function buildDefaultContainer(preferences, url) {
     }
   }
 
-  const lifetime = preferences['defaultContainer.lifetime'];
-  if(lifetime !== 'forever' && cookieStoreId !== NO_CONTAINER.cookieStoreId){
+  // The lifetime determines how long the container lives
+  const lifetime = preferences['defaultContainer.lifetime'] || DEFAULT_CONTAINER_LIFETIME;
+  if(cookieStoreId !== NO_CONTAINER.cookieStoreId){
     await PreferenceStorage.set({
       key: `containers.${cookieStoreId}.lifetime`,
       value: lifetime,

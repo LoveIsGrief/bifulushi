@@ -1,0 +1,49 @@
+/*BEM is used for classes*/
+/*https://en.bem.info/methodology/quick-start/*/
+
+:root {
+  --border-radius: 20px;
+  --small-border-radius: 12px;
+  --background-color: #ebf2fa;
+  --common-margin: 5px;
+  --page-margin: 10px;
+  --link-color: #599dd9;
+}
+
+body {
+  padding-top: 1.5em;
+}
+
+input[type="text"] {
+  background: #FDFEFF 0% 0% no-repeat padding-box;
+  border: 1px solid #7E97B84D;
+  border-radius: var(--small-border-radius);
+  width: 100%;
+  padding: 10px;
+}
+
+.tab-container__content {
+  display: flex;
+  flex-direction: column;
+}
+
+#tab-content__containers{
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: baseline;
+}
+
+.pref-doc {
+  --size: 15px;
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  width: var(--size);
+  height: var(--size);
+  line-height: var(--size);
+  font-size: var(--size);
+  text-align: center;
+  color: var(--link-color);
+}

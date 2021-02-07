@@ -1,0 +1,23 @@
+.csv-editor p {
+  margin-bottom: 1rem;
+}
+
+.csv-editor code {
+  margin-bottom: 1rem;
+  display: inline-block;
+}
+
+.ce-open-button {
+  float: right;
+}
+
+.ce-hosts-textarea {
+  background: transparent;
+  width: 100%;
+  min-height: 200px;
+  max-height: 400px;
+  resize: vertical;
+  padding: 6px;
+  font-family: monospace;
+  border: 1px solid var(--border-color);
+}

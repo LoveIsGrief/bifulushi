@@ -2,16 +2,156 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>bifulushi preferences</title>
-    <link rel="stylesheet" href="index.css"/>
-    <script type="module" src="index.js"></script>
+    <title>Bifulushi preferences</title>
+      <link rel="stylesheet" href="styles/index.css"/>
+      <link rel="stylesheet" href="styles/card.css"/>
+      <link rel="stylesheet" href="styles/container-preference.css"/>
+      <link rel="stylesheet" href="styles/input-preference.css"/>
+      <link rel="stylesheet" href="styles/info-tooltip.css"/>
+      <link rel="stylesheet" href="styles/radio-preference.css"/>
+      <link rel="stylesheet" href="styles/tab_container.css"/>
+      <link rel="stylesheet" href="styles/toggle-preference.css"/>
+    <script src="index.js" type="module"></script>
 </head>
 <body>
-<h1>Preferences</h1>
-<div class="preferences-container">
+<div id="preference-app">
+    <div class="tab-container">
+        <div class="tab-container__tabs">
+            <span @click="activeTab = 'preferences'" :class="getTabClasses('preferences')">Preferences</span>
+            <span @click="activeTab = 'containers'" :class="getTabClasses('containers')">Containers</span>
+        </div>
+        <div v-show="isActive('preferences')" id="tab-content__preferences" class="tab-container__content">
+            <div class="header">
+                <div class="card" small>
+                    <toggle-preference
+                            preference="matchDomainOnly"
+                            label="Match Domain only"
+                            description="When matching rules to a URL, only use the domain as criteria"
+                            doc-url="/docs/ui-preferences/matchDomainOnly.html"
+                    ></toggle-preference>
+                </div>
+                <div class="card" small>
+                    <toggle-preference
+                            preference="keepOldTabs"
+                            label="Keep old tabs"
+                            description="After a contained tab has been created, the old won't be closed"
+                    ></toggle-preference>
+                </div>
+                <div class="card">
+                    <toggle-preference
+                            preference="caseSensitiveMatch"
+                            label="Case sensitive matching"
+                            description="The upper and lower case will be important when matching rules"
+                    ></toggle-preference>
+                </div>
+            </div>
+            <div class="card">
+                <toggle-preference
+                        preference="defaultContainer"
+                        label="Default Container"
+                        description="Which container unmatched URLs will end up in"
+                        doc-url="/docs/ui-preferences/default_containers.html"
+                >
+                    <input-preference
+                            preference="defaultContainer.containerName"
+                            label="Container name"
+                            type="text"
+                    >
+                        What the name of the default container will be.
+                        It's possible to use variables here
+                    </input-preference>
 
+                    <lifetime-preference
+                            preference="defaultContainer.lifetime"
+                    ></lifetime-preference>
+                    <input-preference
+                            preference="defaultContainer.ruleAddition"
+                            label="Rule addition"
+                            type="text"
+                    >
+                        The rule to be added to this container once a domain is matched (can be empty)
+                    </input-preference>
+                </toggle-preference>
+            </div>
+        </div>
+        <div v-show="isActive('containers')" id="tab-content__containers" class="tab-container__content">
+            <container-preference
+                    v-for="container in containers"
+                    :key="container.cookieStoreId"
+                    :container="container"
+            ></container-preference>
+        </div>
+    </div>
 </div>
 
+<script type="x-template" id="toggle-preference">
+    <div class="toggle-preference" >
+        <div class="toggle-preference__header">
+            <div @click="value=!value" :class="classes()">
+                <div class="toggle">
+                    <div class="toggle__indicator"></div>
+                </div>
+            </div>
+            <div class="text-container">
+                <div class="text-container__label">
+                    {{ label }}
+                </div>
+                <a
+                        v-show.once="docUrl"
+                        class="pref-doc"
+                        :href="docUrl"
+                        target="_blank"
+                >?</a>
+            </div>
+        </div>
+        <div class="toggle-preference__content">
+            <slot></slot>
+        </div>
+        <info-tooltip>{{ description }}</info-tooltip>
+    </div>
+</script>
+<script type="x-template" id="container-preference">
+    <div :class="classes">
+        <div class="container-preference__header">{{ container.name }}</div>
+        <div @click="open=!open" class="input-preference__icon"></div>
+
+        <div class="splitter"></div>
+
+        <div class="container-preference__content">
+            <lifetime-preference
+                    :preference="lifetimePreferenceName"
+            ></lifetime-preference>
+        </div>
+    </div>
+</script>
+<script type="x-template" id="info-tooltip">
+    <span class="info-tooltip">
+        <span class="info-tooltip__icon">i</span>
+        <span class="info-tooltip__info"><slot></slot></span>
+    </span>
+</script>
+<script type="x-template" id="input-preference">
+    <div class="input-preference">
+        <header>
+            <info-tooltip><slot></slot></info-tooltip>
+            {{label}}
+        </header>
+        <input :type="type" v-model="value">
+    </div>
+</script>
+<script type="x-template" id="radio-preference">
+    <div class="radio-preference">
+        <div class="radio-preference__header">
+            <info-tooltip>{{ description }}</info-tooltip>
+            {{ label }}
+        </div>
+        <label v-for="choice in choices" class="radio-container">
+            <input type="radio" :name="name" v-model="value" :value="choice.value">
+            <span class="radio-container__overlay"></span>
+            <span class="radio-container__label">{{ choice.label }}</span>
+        </label>
+    </div>
+</script>
 
 
 </body>

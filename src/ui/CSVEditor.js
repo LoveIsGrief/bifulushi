@@ -1,11 +1,11 @@
-import ContextualIdentities from '../ContextualIdentity';
-import State from '../State';
-import Storage from '../Storage/HostStorage';
-import {makeActionSelectedTrigger} from './actions/utils';
-import {cleanHostInput, qs} from '../utils';
-import {hideLoader, showLoader} from './loader';
-import {showToast} from './toast';
-import PreferenceStorage from '../Storage/PreferenceStorage';
+import ContextualIdentities from '../ContextualIdentity/index.js';
+import State from '../State/index.js';
+import Storage from '../Storage/HostStorage.js';
+import {makeActionSelectedTrigger} from './actions/utils.js';
+import {cleanHostInput, qs} from '../utils.js';
+import {hideLoader, showLoader} from './loader.js';
+import {showToast} from './toast.js';
+import PreferenceStorage from '../Storage/PreferenceStorage.js';
 
 const HOST_MAPS_SPLIT_KEY = ',';
 const openButton = qs('.ce-open-button');

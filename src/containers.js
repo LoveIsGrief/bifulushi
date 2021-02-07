@@ -1,9 +1,9 @@
-import Storage from './Storage/HostStorage';
-import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity';
-import Tabs from './Tabs';
-import PreferenceStorage from './Storage/PreferenceStorage';
-import {filterByKey} from './utils';
-import {buildDefaultContainer} from './defaultContainer';
+import Storage from './Storage/HostStorage.js';
+import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity/index.js';
+import Tabs from './Tabs/index.js';
+import PreferenceStorage from './Storage/PreferenceStorage.js';
+import {filterByKey} from './utils.js';
+import {buildDefaultContainer} from './defaultContainer.js';
 
 const IGNORED_URLS_REGEX = /^(about|moz-extension|file|javascript|data|chrome):/;
 

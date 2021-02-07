@@ -1,11 +1,11 @@
-import State from '../State';
-import HostStorage from '../Storage/HostStorage';
-import PreferenceStorage from '../Storage/PreferenceStorage';
-import Tabs from '../Tabs';
-import {qs, qsAll} from '../utils';
-import {showLoader, hideLoader} from './loader';
-import {showToast} from './toast';
-import {cleanHostInput} from '../utils';
+import State from '../State/index.js';
+import HostStorage from '../Storage/HostStorage.js';
+import PreferenceStorage from '../Storage/PreferenceStorage.js';
+import Tabs from '../Tabs/index.js';
+import {qs, qsAll} from '../utils.js';
+import {showLoader, hideLoader} from './loader.js';
+import {showToast} from './toast.js';
+import {cleanHostInput} from '../utils.js';
 
 const addButton = qs('.add-button');
 const saveButton = qs('.save-button');

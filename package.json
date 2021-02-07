@@ -10,41 +10,23 @@
   ],
   "license": "MIT",
   "scripts": {
-    "webpack": "webpack --config ./webpack.dev --watch",
-    "prebuild": "rimraf build && rimraf web-ext-artifacts",
-    "build": "webpack --config ./webpack.prod",
-    "postbuild": "cp -a static/ build/ && web-ext build -s build/",
-    "web-ext": "web-ext run -s build/ --start-url=about:debugging#addons",
-    "web-ext-perm": "mkdirp ./profile && web-ext run -s build/ --start-url=about:debugging#addons -p ./profile --keep-profile-changes",
+    "build": "web-ext build",
+    "start": "web-ext run --start-url=about:debugging#addons",
+    "start-perm": "mkdirp ./profile && web-ext run --start-url=about:debugging#addons -p ./profile --keep-profile-changes",
     "lint": "eslint --ignore-path .gitignore ./",
     "test": "jest",
     "test:watch": "jest --watchAll"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^10.0.3",
-    "babel-jest": "^26.0.1",
-    "babel-loader": "^8.0.6",
+    "babel-eslint": "^10.1.0",
     "babel-preset-env": "^1.7.0",
-    "css-loader": "^3.0.0",
-    "eslint": "^6.0.1",
-    "file-loader": "^4.0.0",
-    "jest": "^26.0.1",
-    "markdown-it-anchor": "^5.2.4",
-    "markdown-it-table-of-contents": "^0.4.4",
-    "markdown-it-vanilla-loader": "^1.0.10",
-    "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.14.1",
-    "raw-loader": "^3.1.0",
-    "rimraf": "^3.0.0",
-    "sass-loader": "^8.0.0",
-    "style-loader": "^1.0.0",
-    "web-ext": "^4.2.0",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7",
-    "webpack-merge": "^4.2.1"
+    "eslint": "^7.19.0",
+    "jest": "^26.6.3",
+    "web-ext": "^5.5.0"
   },
   "dependencies": {
-    "punycode": "^2.1.1"
+    "marked": "^1.2.9",
+    "punycode": "^2.1.1",
+    "vue": "^2.6.12"
   }
 }

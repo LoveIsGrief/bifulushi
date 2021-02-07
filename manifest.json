@@ -1,0 +1,38 @@
+{
+  "manifest_version": 2,
+  "name": "Bifulushi",
+  "version": "3.7.0",
+  "description": "Firefox extension to automatically open websites in a container",
+  "icons": {
+    "48": "static/icons/icon.png",
+    "96": "static/icons/icon.png"
+  },
+  "permissions": [
+    "contextualIdentities",
+    "cookies",
+    "tabs",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "<all_urls>"
+  ],
+  "content_security_policy": "script-src 'unsafe-eval' 'self'; object-src 'self'",
+  "browser_action": {
+    "browser_style": true,
+    "default_title": "Bifulushi",
+    "default_popup": "src/ui/index.html",
+    "default_icon": "static/icons/icon.png"
+  },
+  "background": {
+    "page": "src/background.html"
+  },
+  "applications": {
+    "gecko": {
+      "id": "bifulushi@namingthingsishard",
+      "strict_min_version": "53.0"
+    }
+  },
+  "options_ui": {
+    "page": "src/ui-preferences/index.html"
+  }
+}

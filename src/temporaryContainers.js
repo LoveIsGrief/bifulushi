@@ -1,8 +1,9 @@
 // Hoisted and adapted from https://gitlab.com/NamingThingsIsHard/firefox/click-to-contain
 
-import ContextualIdentities from './ContextualIdentity';
-import PreferenceStorage from './Storage/PreferenceStorage';
-import {filterByKey} from './utils';
+import ContextualIdentities from './ContextualIdentity/index.js';
+import PreferenceStorage from './Storage/PreferenceStorage.js';
+import {filterByKey} from './utils.js';
+import {CONTAINER_LIFETIME_LAST} from './constants.js';
 
 // Prefer tracking tabs and their contexts to
 // calling browser.tabs.query with the contextId
@@ -42,7 +43,7 @@ export async function onTabRemoved(tabId) {
       `containers.${tabContextId}.lifetime`,
       true
   );
-  if (contextLifetime === 'untilLastTab') {
+  if (contextLifetime === CONTAINER_LIFETIME_LAST) {
     console.info('bifulushi: Removed temporary container ID:', tabContextId);
     return ContextualIdentities.remove(tabContextId);
   }
@@ -71,7 +72,7 @@ export function cleanUpTemporaryContainers() {
       const cookieStoreId = container.cookieStoreId;
       cookieStoreIds[cookieStoreId] = true;
       return activeCookieStoreIds[cookieStoreId] === undefined // inactive containers
-              && preferences[`containers.${cookieStoreId}.lifetime`] === 'untilLastTab';
+              && preferences[`containers.${cookieStoreId}.lifetime`] === CONTAINER_LIFETIME_LAST;
     }).map((container) => {
       console.warn('Removing leftover container: ', container.name);
       return ContextualIdentities.remove(container.cookieStoreId);

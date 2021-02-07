@@ -1,7 +1,7 @@
-import State from '../State';
-import {NO_CONTAINER} from '../ContextualIdentity';
-import {qs} from '../utils';
-import {setActiveAction} from './actions/utils';
+import State from '../State/index.js';
+import {NO_CONTAINER} from '../ContextualIdentity/index.js';
+import {qs} from '../utils.js';
+import {setActiveAction} from './actions/utils.js';
 
 const csSelected = qs('.container-selector-selected');
 const csList = qs('.container-selector-list');

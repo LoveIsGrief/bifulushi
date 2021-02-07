@@ -1,0 +1,47 @@
+.info-tooltip {
+    --size: 15px;
+    all: initial;
+    position: relative;
+    display: inline-flex;
+    vertical-align: top;
+}
+
+.info-tooltip__icon {
+    position: relative;
+    border-radius: var(--size);
+    line-height: var(--size);
+    font-size: var(--size);
+    width: var(--size);
+    height: var(--size);
+    padding: 1px;
+
+    font-family: "Times New Roman" ,serif;
+    text-align: center;
+    text-transform: initial;
+    font-weight: bold;
+
+    color: var(--background-color);
+    background: gray;
+}
+
+
+.info-tooltip__info {
+    font-size: 0.8rem;
+    width: 200px;
+    display: inline-block;
+    border: 1px solid black;
+    padding: 10px;
+    background: black;
+    color: beige;
+    border-radius: 10px;
+    opacity: 0;
+    transition: 0.6s all;
+    position: fixed;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.info-tooltip__icon:hover + .info-tooltip__info,
+.info-tooltip__icon:focus + .info-tooltip__info {
+    opacity: 1;
+}

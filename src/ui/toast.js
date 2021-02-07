@@ -1,4 +1,4 @@
-import {qs} from '../utils';
+import {qs} from '../utils.js';
 
 const toast = qs('.toast');
 

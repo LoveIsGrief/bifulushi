@@ -1,0 +1,39 @@
+.card {
+    --child-v-margin: 30px;
+    --h-padding: 20px;
+    /* To act as the parent for "absolute" children */
+    position: relative;
+
+    display: flex;
+    flex-grow: 2;
+    flex-direction: column;
+
+    padding-left: var(--h-padding);
+    padding-right: var(--h-padding);
+    margin: var(--page-margin);
+
+    background: #ebf2fa 0% 0% no-repeat padding-box;
+    box-shadow: 4px 2px 16px #5f9de77a;
+    border: 2px solid #0f91fa60;
+    border-radius: var(--border-radius);
+}
+
+.card[small] {
+    min-width: 40%;
+    max-width: 50%;
+    flex-grow: 0.5;
+}
+
+/* Forced equidistant spacing between contained elements */
+.card > *:nth-child(n+2):nth-last-child(n+2) {
+    padding-bottom: var(--child-v-margin);
+}
+
+.card > *:first-child {
+    padding-top: var(--child-v-margin);
+    padding-bottom: var(--child-v-margin);
+}
+
+.card > *:nth-last-child(1) {
+    padding-bottom: var(--child-v-margin);
+}
