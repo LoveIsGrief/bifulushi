@@ -61,14 +61,9 @@
                         It's possible to use variables here
                     </input-preference>
 
-                    <radio-preference
+                    <lifetime-preference
                             preference="defaultContainer.lifetime"
-                            label="Lifetime"
-                            description="How long a container will live"
-
-                            radio-forever="Forever"
-                            radio-last="Until last tab closed"
-                            default-radio="last"></radio-preference>
+                    ></lifetime-preference>
                     <input-preference
                             preference="defaultContainer.ruleAddition"
                             label="Rule addition"
@@ -123,14 +118,9 @@
         <div class="splitter"></div>
 
         <div class="container-preference__content">
-            <radio-preference
+            <lifetime-preference
                     :preference="lifetimePreferenceName"
-                    label="Lifetime"
-                    description="How long a container will live"
-
-                    radio-forever="Forever"
-                    radio-last="Until last tab closed"
-                    default-radio="last"></radio-preference>
+            ></lifetime-preference>
         </div>
     </div>
 </script>
