@@ -24,7 +24,7 @@ export default Vue.extend({
     console.debug(`Loaded preference ${this.preference}`, this.value)
   },
   watch: {
-    async value(newValue, oldValue) {
+    async value(newValue) {
       console.debug(`Setting preference ${this.preference}`, newValue)
       await PreferenceStorage.set({
         key: this.preference,

@@ -10,8 +10,7 @@
     "eslint:recommended"
   ],
   "rules": {
-    "semi": 2,
-    "quotes": [2, "single"],
+    "quotes": [1, "double"],
     "eqeqeq": 2,
     "comma-dangle": [2, "always-multiline"]
   },
@@ -23,6 +22,7 @@
   },
   "parser": "babel-eslint",
   "globals": {
-    "browser": true
+    "browser": true,
+    "marked": false
   }
 }
