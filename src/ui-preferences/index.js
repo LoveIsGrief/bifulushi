@@ -7,7 +7,7 @@ import Vue from '/libs/vue.min.js';
 
 import ContextualIdentities from "/src/ContextualIdentity/index.js"
 
-const app = new Vue({
+new Vue({
   el: '#preference-app',
   data: {
     activeTab: 'preferences',
@@ -26,6 +26,5 @@ const app = new Vue({
   },
   async beforeCreate() {
     this.containers = await ContextualIdentities.get()
-  }
-});
-
+  },
+})

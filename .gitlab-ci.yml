@@ -70,22 +70,22 @@ npm_install:dubnium:
 ##############
 # Lint
 
-#lint:
-#  <<: *lint
-#  dependencies:
-#    - npm_install
-#
-#lint:erbium:
-#  <<: *lint
-#  image: "node:erbium"
-#  dependencies:
-#    - "npm_install:erbium"
-#
-#lint:dubnium:
-#  <<: *lint
-#  image: "node:dubnium"
-#  dependencies:
-#    - "npm_install:dubnium"
+lint:
+  <<: *lint
+  dependencies:
+    - npm_install
+
+lint:erbium:
+  <<: *lint
+  image: "node:erbium"
+  dependencies:
+    - "npm_install:erbium"
+
+lint:dubnium:
+  <<: *lint
+  image: "node:dubnium"
+  dependencies:
+    - "npm_install:dubnium"
 
 ##############
 # Unit tests
