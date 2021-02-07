@@ -1,4 +1,4 @@
-import Vue from '/libs/vue.min.js';
+import Vue from '/libs/vue.js';
 import BasePreference from './base.js'
 
 Vue.component('input-preference', BasePreference.extend({

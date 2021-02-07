@@ -1,4 +1,4 @@
-import Vue from '/libs/vue.min.js';
+import Vue from '/libs/vue.js';
 import PreferenceStorage from '/src/Storage/PreferenceStorage.js';
 
 export default Vue.extend({

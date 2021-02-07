@@ -1,4 +1,4 @@
-import Vue from '/libs/vue.min.js';
+import Vue from '/libs/vue.js';
 import BasePreference from './base.js';
 import {CONTAINER_LIFETIMES, DEFAULT_CONTAINER_LIFETIME} from '/src/constants.js';
 

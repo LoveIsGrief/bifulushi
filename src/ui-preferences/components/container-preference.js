@@ -1,4 +1,4 @@
-import Vue from '/libs/vue.min.js';
+import Vue from '/libs/vue.js';
 
 Vue.component('container-preference', {
     name: 'ContainerPreferenceComponent',

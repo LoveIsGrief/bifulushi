@@ -3,7 +3,7 @@ import "./components/info-tooltip.js";
 import "./components/input-preference.js";
 import "./components/lifetime-preference.js";
 import "./components/toggle-preference.js";
-import Vue from '/libs/vue.min.js';
+import Vue from '/libs/vue.js';
 
 import ContextualIdentities from "/src/ContextualIdentity/index.js"
 
