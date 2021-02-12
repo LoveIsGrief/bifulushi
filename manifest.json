@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Bifulushi",
-  "version": "0.1.1a",
+  "version": "0.1.2a",
   "description": "Firefox extension to automatically open websites in a container",
   "icons": {
     "48": "static/icons/icon.png",

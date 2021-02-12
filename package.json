@@ -1,6 +1,6 @@
 {
   "name": "bifulushi",
-  "version": "0.1.1a",
+  "version": "0.1.2a",
   "description": "Firefox extension to automatically open websites in a container",
   "main": "index.js",
   "repository": "https://gitlab.com/NamingThingsIsHard/firefox/bifulushi.git",
