@@ -2,8 +2,9 @@ import Storage from './Storage/HostStorage.js';
 import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity/index.js';
 import Tabs from './Tabs/index.js';
 import PreferenceStorage from './Storage/PreferenceStorage.js';
-import {filterByKey} from './utils.js';
+import {canExit, filterByKey} from './utils.js';
 import {buildDefaultContainer} from './defaultContainer.js';
+import ExitRuleStorage from './Storage/ExitRuleStorage.js';
 
 const IGNORED_URLS_REGEX = /^(about|moz-extension|file|javascript|data|chrome):/;
 
@@ -60,7 +61,7 @@ const createTab = (url, newTabIndex, currentTabId, openerTabId, cookieStoreId) =
 };
 
 
-async function handle(url, tabId) {
+async function handle(url, tabId, cookieStoreId) {
   const creatingUrl = creatingTabs[tabId];
   if (IGNORED_URLS_REGEX.test(url) || creatingUrl === url) {
     return;
@@ -68,14 +69,20 @@ async function handle(url, tabId) {
     delete creatingTabs[tabId];
   }
   let preferences = await PreferenceStorage.getAll(true);
-  let [hostMap, identities, currentTab] = await Promise.all([
+  let [hostMap, identities, currentTab, exitRules] = await Promise.all([
     Storage.get(url, preferences),
     ContextualIdentity.getAll(),
     Tabs.get(tabId),
+    ExitRuleStorage.get(cookieStoreId, true),
   ]);
 
   if (currentTab.incognito || !hostMap) {
     return {};
+  }
+
+  // Make sure the current URL may exit the container
+  if(exitRules && !canExit(url, exitRules, preferences)){
+    return{}
   }
 
   const hostIdentity = identities.find((identity) => identity.cookieStoreId === hostMap.cookieStoreId);
@@ -117,12 +124,12 @@ export const webRequestListener = (requestDetails) => {
   if (requestDetails.frameId !== 0 || requestDetails.tabId === -1) {
     return {};
   }
-  return handle(requestDetails.url, requestDetails.tabId);
+  return handle(requestDetails.url, requestDetails.tabId, requestDetails.cookieStoreId);
 };
 
-export const tabUpdatedListener = (tabId, changeInfo) => {
+export const tabUpdatedListener = (tabId, changeInfo, tab) => {
   if (!changeInfo.url) {
     return;
   }
-  return handle(changeInfo.url, tabId);
+  return handle(changeInfo.url, tabId, tab.cookieStoreId);
 };

@@ -178,3 +178,25 @@ function escapeRegExp(string) {
   // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#Escaping
   return string.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
+
+/**
+ * Checks if a url may exit a container
+ *
+ * Find the first matching exit rule.
+ *
+ * @param url {String}
+ * @param exitRules {ExitRule[]}
+ * @param preferences {Object}
+ *
+ * @return {Boolean} true by default
+ */
+export function canExit(url, exitRules, preferences) {
+  for (let exitRule of exitRules) {
+    if (!matchesSavedMap(url, preferences, {host: exitRule.pattern})) {
+      continue;
+    }
+
+    return exitRule.reject;
+  }
+  return true;
+}
