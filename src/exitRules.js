@@ -78,7 +78,7 @@ export async function createReverseContainerMenu() {
             cookieStoreId: container.cookieStoreId,
         });
         return Tabs.update(newTab.id, {
-            url: tab.url
+            url: tab.url,
         })
     })
 }

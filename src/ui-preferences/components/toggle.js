@@ -5,13 +5,13 @@ Vue.component('toggle', {
   props:{
     active: {
       type: Boolean,
-      default: false
+      default: false,
     },
     activeIcon: {
-      type: String
+      type: String,
     },
     inactiveIcon: {
-      type: String
+      type: String,
     },
   },
   computed: {
@@ -26,6 +26,6 @@ Vue.component('toggle', {
     toggle(){
       this.active = !this.active
       this.$emit("toggle", this.active)
-    }
+    },
   },
 })
