@@ -196,7 +196,7 @@ export function canExit(url, exitRules, preferences) {
       continue;
     }
 
-    return !exitRule.accept;
+    return exitRule.accept;
   }
   return true;
 }
