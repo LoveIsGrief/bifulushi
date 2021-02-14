@@ -95,6 +95,10 @@ class ContextualIdentities {
     return this.contextualIdentities.query({name});
   }
 
+  getById(id) {
+    return this.contextualIdentities.get(id);
+  }
+
   addOnCreateListener(fn) {
     browser.contextualIdentities.onCreated.addListener(fn);
   }

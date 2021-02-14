@@ -2,9 +2,10 @@ import Storage from './Storage/HostStorage.js';
 import ContextualIdentity, {NO_CONTAINER} from './ContextualIdentity/index.js';
 import Tabs from './Tabs/index.js';
 import PreferenceStorage from './Storage/PreferenceStorage.js';
-import {canExit, filterByKey} from './utils.js';
+import {filterByKey} from './utils.js';
 import {buildDefaultContainer} from './defaultContainer.js';
 import ExitRuleStorage from './Storage/ExitRuleStorage.js';
+import {canExit} from "./exitRules.js"
 
 const IGNORED_URLS_REGEX = /^(about|moz-extension|file|javascript|data|chrome):/;
 

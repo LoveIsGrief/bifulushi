@@ -10,6 +10,7 @@
   "permissions": [
     "contextualIdentities",
     "cookies",
+    "menus",
     "tabs",
     "webRequest",
     "webRequestBlocking",
