@@ -10,6 +10,7 @@
       <link rel="stylesheet" href="styles/info-tooltip.css"/>
       <link rel="stylesheet" href="styles/radio-preference.css"/>
       <link rel="stylesheet" href="styles/tab_container.css"/>
+    <link rel="stylesheet" href="styles/toggle.css"/>
       <link rel="stylesheet" href="styles/toggle-preference.css"/>
     <script src="index.js" type="module"></script>
 </head>
@@ -84,14 +85,17 @@
     </div>
 </div>
 
+<script type="x-template" id="toggle">
+    <div class="toggle-container">
+        <div @click="toggle()" :class="classes">
+            <div class="toggle__indicator"></div>
+        </div>
+    </div>
+</script>
 <script type="x-template" id="toggle-preference">
     <div class="toggle-preference" >
         <div class="toggle-preference__header">
-            <div @click="value=!value" :class="classes()">
-                <div class="toggle">
-                    <div class="toggle__indicator"></div>
-                </div>
-            </div>
+            <toggle :active="value" v-on:toggle="value = $event"></toggle>
             <div class="text-container">
                 <div class="text-container__label">
                     {{ label }}
@@ -107,7 +111,7 @@
         <div class="toggle-preference__content">
             <slot></slot>
         </div>
-        <info-tooltip>{{ description }}</info-tooltip>
+        <info-tooltip v-show="description">{{ description }}</info-tooltip>
     </div>
 </script>
 <script type="x-template" id="container-preference">
