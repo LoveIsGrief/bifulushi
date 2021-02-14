@@ -2,7 +2,9 @@ import HostStorage from "./Storage/HostStorage.js"
 import ExitRuleStorage from "./Storage/ExitRuleStorage.js"
 import ContextualIdentities from "./ContextualIdentity/index.js"
 import Tabs from "./Tabs/index.js"
-import {matchesSavedMap} from "./utils"
+import {matchesSavedMap} from "./utils.js"
+import PreferenceStorage from "./Storage/PreferenceStorage.js"
+import {CONTAINER_LIFETIME_LAST} from "./constants.js"
 
 const NEW_EXIT_RULE_CONTAINER = "create-exit-rule-container"
 
@@ -62,6 +64,12 @@ export async function createReverseContainerMenu() {
         await ExitRuleStorage.set({
             key: container.cookieStoreId,
             value: exitRules,
+        })
+
+        // Set lifetime
+        await PreferenceStorage.set({
+            key: `containers.${container.cookieStoreId}.lifetime`,
+            value: CONTAINER_LIFETIME_LAST,
         })
 
         // Open URL in new container
