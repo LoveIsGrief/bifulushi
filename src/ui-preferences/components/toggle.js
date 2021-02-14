@@ -6,7 +6,13 @@ Vue.component('toggle', {
     active: {
       type: Boolean,
       default: false
-    }
+    },
+    activeIcon: {
+      type: String
+    },
+    inactiveIcon: {
+      type: String
+    },
   },
   computed: {
     classes() {

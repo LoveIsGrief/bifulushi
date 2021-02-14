@@ -29,6 +29,8 @@
     border: 4px solid #ffffff4d;
     border-radius: var(--small-border-radius);
 
+    text-align: center;
+
     /* Animations */
     transition-property: margin-left, background-color;
     transition-duration: 1s;
