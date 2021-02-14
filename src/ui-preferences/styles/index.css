@@ -35,6 +35,15 @@ input[type="text"] {
   align-items: baseline;
 }
 
+.header {
+    letter-spacing: 0.2px;
+    color: #7E97B8;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    position: relative;
+}
+
 .pref-doc {
   --size: 15px;
   position: absolute;
