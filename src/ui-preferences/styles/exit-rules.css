@@ -19,10 +19,6 @@
     flex-direction: row;
 }
 
-.exit-rules__move .button {
-
-}
-
 .exit-rule {
     display: flex;
     justify-content: space-between;
