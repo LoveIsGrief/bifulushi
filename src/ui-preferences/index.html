@@ -6,10 +6,12 @@
       <link rel="stylesheet" href="styles/index.css"/>
       <link rel="stylesheet" href="styles/card.css"/>
       <link rel="stylesheet" href="styles/container-preference.css"/>
+      <link rel="stylesheet" href="styles/exit-rules.css"/>
       <link rel="stylesheet" href="styles/input-preference.css"/>
       <link rel="stylesheet" href="styles/info-tooltip.css"/>
       <link rel="stylesheet" href="styles/radio-preference.css"/>
       <link rel="stylesheet" href="styles/tab_container.css"/>
+      <link rel="stylesheet" href="styles/toggle.css"/>
       <link rel="stylesheet" href="styles/toggle-preference.css"/>
     <script src="index.js" type="module"></script>
 </head>
@@ -84,14 +86,19 @@
     </div>
 </div>
 
+<script type="x-template" id="toggle">
+    <div class="toggle-container">
+        <div @click="toggle()" :class="classes">
+            <div class="toggle__indicator">
+                {{ active ? activeIcon : inactiveIcon }}
+            </div>
+        </div>
+    </div>
+</script>
 <script type="x-template" id="toggle-preference">
     <div class="toggle-preference" >
         <div class="toggle-preference__header">
-            <div @click="value=!value" :class="classes()">
-                <div class="toggle">
-                    <div class="toggle__indicator"></div>
-                </div>
-            </div>
+            <toggle :active="value" v-on:toggle="value = $event"></toggle>
             <div class="text-container">
                 <div class="text-container__label">
                     {{ label }}
@@ -107,7 +114,7 @@
         <div class="toggle-preference__content">
             <slot></slot>
         </div>
-        <info-tooltip>{{ description }}</info-tooltip>
+        <info-tooltip v-show="description">{{ description }}</info-tooltip>
     </div>
 </script>
 <script type="x-template" id="container-preference">
@@ -121,6 +128,54 @@
             <lifetime-preference
                     :preference="lifetimePreferenceName"
             ></lifetime-preference>
+            <div class="exit-rules">
+                <div class="header">
+                    <span>
+                    <info-tooltip>
+                        Define the patterns here that allow a new URL to exit the container.
+                        Rules are checked in order.
+                    </info-tooltip>
+                    Exit rules
+                    </span>
+                    <div
+                            class="exit-rules__add button"
+                            @click="addRule()"
+                    >+
+                    </div>
+                </div>
+                <div
+                        v-for="(rule, index) in rules"
+                        class="exit-rule"
+                        :key="rule.id"
+                >
+                    <!--
+                    Seriously required span in div in order to center vertically
+                    CSS -_-
+                    -->
+                    <div v-show="rules.length > 1" class="exit-rules__move">
+                        <span
+                                @click="moveRuleDown(index)"
+                                class="button"
+                                v-show="index < rules.length-1">⬇</span>
+                        <span
+                                @click="moveRuleUp(index)"
+                                class="button"
+                                v-show="index > 0"
+                        >⬆</span>
+                    </div>
+                    <toggle
+                            :active="rule.accept"
+                            v-on:toggle="updateRuleAccept(rule, $event)"
+                            active-icon="✅"
+                            inactive-icon="⛔"
+                    ></toggle>
+                    <input type="text" :value="rule.pattern" v-on:input="updateRulePattern(rule, $event.target.value)">
+                    <div
+                            class="exit-rule__remove button"
+                            @click="removeRule(index)"
+                    ><span>❌</span></div>
+                </div>
+            </div>
         </div>
     </div>
 </script>
@@ -141,7 +196,7 @@
 </script>
 <script type="x-template" id="radio-preference">
     <div class="radio-preference">
-        <div class="radio-preference__header">
+        <div class="header">
             <info-tooltip>{{ description }}</info-tooltip>
             {{ label }}
         </div>

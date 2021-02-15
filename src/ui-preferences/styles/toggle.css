@@ -1,0 +1,44 @@
+.toggle-container {
+    display: flex;
+
+    background: #e5edf5 0% 0% no-repeat padding-box;
+    box-shadow: 4px 2px 16px #5f9de77a;
+    border: 2px solid #ffffff33;
+    border-radius: var(--small-border-radius);
+}
+
+.toggle {
+    position: relative;
+    width: 80px;
+
+    background: #ebf2fa 0% 0% no-repeat padding-box;
+    box-shadow: 4px 2px 16px #5f9de77a;
+    border: 2px solid #ffffff4d;
+    border-radius: var(--small-border-radius);
+
+}
+
+
+.toggle__indicator {
+    position: relative;
+    width: 32px;
+    height: 30px;
+
+    background: #ebf2fa 0% 0% no-repeat;
+    box-shadow: 4px 2px 8px #5f9de7a8;
+    border: 4px solid #ffffff4d;
+    border-radius: var(--small-border-radius);
+
+    text-align: center;
+
+    /* Animations */
+    transition-property: margin-left, background-color;
+    transition-duration: 1s;
+}
+
+
+.toggle--active .toggle__indicator {
+    background: transparent linear-gradient(133deg, #16b1ff 0%, #0979ff 100%) 0% 0% no-repeat;
+    margin-left: 40px;
+    border-color: #16b1ff;
+}

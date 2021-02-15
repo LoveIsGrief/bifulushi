@@ -1,5 +1,6 @@
 import HostStorage from '../Storage/HostStorage.js';
 import PreferenceStorage from '../Storage/PreferenceStorage.js';
+import ExitRuleStorage from "../Storage/ExitRuleStorage.js"
 
 export const NO_CONTAINER = {
   name: 'No Container',
@@ -44,6 +45,7 @@ class ContextualIdentities {
       const cookieStoreId = changeInfo.contextualIdentity.cookieStoreId;
       this.cleanPreferences(cookieStoreId);
       this.cleanMaps(cookieStoreId);
+      this.cleanExitRules(cookieStoreId);
     });
   }
 
@@ -83,6 +85,9 @@ class ContextualIdentities {
         .filter(prefName => prefName.startsWith(`containers.${cookieStoreId}`))
     );
   }
+  async cleanExitRules(cookieStoreId) {
+    return ExitRuleStorage.remove(cookieStoreId);
+  }
 
   getAll(details = {}) {
     return this.contextualIdentities.query(details).then((identities) => [...identities, NO_CONTAINER]);
@@ -93,6 +98,10 @@ class ContextualIdentities {
       return Promise.resolve([NO_CONTAINER]);
     }
     return this.contextualIdentities.query({name});
+  }
+
+  getById(id) {
+    return this.contextualIdentities.get(id);
   }
 
   addOnCreateListener(fn) {

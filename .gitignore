@@ -11,6 +11,7 @@ bifulushi.iml
 # build
 build
 web-ext-artifacts
+signing
 
 # Other
 /profile

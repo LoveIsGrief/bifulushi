@@ -35,6 +35,15 @@ input[type="text"] {
   align-items: baseline;
 }
 
+.header {
+    letter-spacing: 0.2px;
+    color: #7E97B8;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    position: relative;
+}
+
 .pref-doc {
   --size: 15px;
   position: absolute;
@@ -46,4 +55,28 @@ input[type="text"] {
   font-size: var(--size);
   text-align: center;
   color: var(--link-color);
+}
+
+.button {
+    --horizontal-padding: 0.5em;
+
+    position: relative;
+    padding-left: var(--horizontal-padding);
+    padding-right: var(--horizontal-padding);
+
+    background: #ebf2fa 0% 0% no-repeat padding-box;
+    box-shadow: 4px 2px 16px #5f9de77a;
+    border: 2px solid #ffffff4d;
+    border-radius: var(--small-border-radius);
+    text-align: center;
+}
+
+.button:hover {
+  border-color: #5f9de77a;
+}
+
+.button:active {
+  background: transparent linear-gradient(133deg, #6d7477 0%, #b6c7db 100%) 0% 0% no-repeat;
+  border-color: #16b1ff;
+  color: white;
 }

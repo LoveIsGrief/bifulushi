@@ -4,15 +4,6 @@
     flex-direction: column;
 }
 
-.radio-preference__header {
-    letter-spacing: 0.2px;
-    color: #7E97B8;
-    text-transform: uppercase;
-    font-weight: bold;
-
-    position: relative;
-}
-
 .radio-preference .radio-container {
     --radio-radius: 25px;
     display: flex;

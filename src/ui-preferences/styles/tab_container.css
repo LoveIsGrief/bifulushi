@@ -40,7 +40,7 @@
     opacity: 1;
 }
 
-.tab-container__content .header {
+.tab-container__content > .header {
     display: flex;
     flex-flow: wrap;
 }

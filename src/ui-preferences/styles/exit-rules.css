@@ -1,0 +1,39 @@
+.exit-rules {
+    margin-top: 1em;
+}
+
+.exit-rules > .header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.exit-rules__add {
+    margin-right: 1em;
+}
+
+.exit-rules__move {
+    font-size: 27px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.exit-rule {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.exit-rule__remove {
+    font-size: 20px;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+.exit-rule__remove.button {
+    color: #cc2c2c;
+}

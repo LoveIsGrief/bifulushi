@@ -15,11 +15,16 @@ export default class PrefixStorage {
    *
    * @return {Promise<Object> | PromiseLike<Object>}
    */
-  getAll() {
-    return this.storage.get(null).then((results) => {
-      return this._getNonPrefixedObject(results);
-    });
-
+  async getAll(valuesOnly = false) {
+    let results = this._getNonPrefixedObject(
+      await this.storage.get(null),
+    );
+    if (valuesOnly) {
+      for (let preferenceKey in results) {
+        results[preferenceKey] = results[preferenceKey].value || results[preferenceKey];
+      }
+    }
+    return results;
   }
 
   _getNonPrefixedObject(prefixedObject){
@@ -34,8 +39,12 @@ export default class PrefixStorage {
           }, {});
   }
 
-  async get(key) {
-    return this._getNonPrefixedObject(await this.storage.get(this.PREFIX + key))[key];
+  async get(key, valueOnly = false) {
+    let preference = this._getNonPrefixedObject(await this.storage.get(this.PREFIX + key))[key];
+    if (valueOnly && preference !== undefined) {
+      preference = preference.value || preference;
+    }
+    return preference;
   }
 
   setAll(obj = {}) {
