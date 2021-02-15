@@ -21,7 +21,7 @@ export default class PrefixStorage {
     );
     if (valuesOnly) {
       for (let preferenceKey in results) {
-        results[preferenceKey] = results[preferenceKey].value;
+        results[preferenceKey] = results[preferenceKey].value || results[preferenceKey];
       }
     }
     return results;
@@ -42,7 +42,7 @@ export default class PrefixStorage {
   async get(key, valueOnly = false) {
     let preference = this._getNonPrefixedObject(await this.storage.get(this.PREFIX + key))[key];
     if (valueOnly && preference !== undefined) {
-      preference = preference.value;
+      preference = preference.value || preference;
     }
     return preference;
   }
