@@ -17,7 +17,7 @@ cache:
   image: "node:lts"
   before_script:
     # Install deps
-    - npm ci --cache .npm --prefer-offline
+    - npm i --cache .npm --prefer-offline
 
 .lint: &lint
   <<: *base
