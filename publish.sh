@@ -7,6 +7,7 @@ ls web-ext-artifacts/*
 zipfile="$(ls web-ext-artifacts)"
 
 ssh -o StrictHostKeyChecking=no \
+    -p "$PIN_SSH_PORT" \
     "$PIN_SSH_USER@$PIN_SSH_HOST" \
     "$zipfile" < "web-ext-artifacts/$zipfile" | tee hash
 
