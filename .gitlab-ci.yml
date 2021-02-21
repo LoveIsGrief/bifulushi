@@ -157,4 +157,5 @@ publish:
     - mkdir -p ~/.ssh
     - chmod 0700 ~/.ssh
     - echo "$PIN_SSH_KEY" > ~/.ssh/id_rsa
+    - chmod 0400 ~/.ssh/id_rsa
     - ./publish.sh
