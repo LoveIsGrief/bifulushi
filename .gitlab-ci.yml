@@ -4,6 +4,7 @@ stages:
   - test
   - audit
   - build
+  - publish
 
 # Cache modules in between jobs
 cache:
@@ -122,12 +123,15 @@ audit:dubnium:
     - "npm_install:dubnium"
 
 ##############
-# Audits
+# Builds
 
 build:
   <<: *build
   dependencies:
     - npm_install
+  artifacts:
+    paths:
+      - web-ext-artifacts
 
 build:erbium:
   <<: *build
@@ -140,3 +144,17 @@ build:dubnium:
   image: "node:dubnium"
   dependencies:
     - "npm_install:dubnium"
+
+
+##############
+# Distribution
+
+publish:
+  stage: publish
+  dependencies:
+    - build
+  script:
+    - mkdir -p ~/.ssh
+    - chmod 0700 ~/.ssh
+    - echo "$PIN_SSH_KEY" > ~/.ssh/id_rsa
+    - ./publish.sh
