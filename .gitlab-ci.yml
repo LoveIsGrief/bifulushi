@@ -98,14 +98,20 @@ lint:dubnium:
 
 unit_test:
   <<: *tests
+  dependencies:
+    - npm_install
 
 unit_test:erbium:
   <<: *tests
   image: "node:erbium"
+  dependencies:
+    - "npm_install:erbium"
 
 unit_test:dubnium:
   <<: *tests
   image: "node:dubnium"
+  dependencies:
+    - "npm_install:dubnium"
 
 ##############
 # Audits
