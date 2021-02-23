@@ -4,6 +4,7 @@ stages:
   - test
   - audit
   - build
+  - sign
   - publish
 
 # Cache modules in between jobs
@@ -53,6 +54,10 @@ cache:
     paths:
       - node_modules
       - .npm
+
+.versiononly: &versiononly
+  only:
+    - /^v\d+\.\d+\..+/  # version tag
 
 ##############
 # Install and cache artifacts
@@ -149,10 +154,22 @@ build:dubnium:
 ##############
 # Distribution
 
-publish:
-  stage: publish
+sign:
+  <<: *versiononly
+  stage: sign
   dependencies:
     - build
+  script:
+    - web-ext sign --api-key="$AMO_SIGNING_KEY" --api-secret="$AMO_SIGNING_SECRET"
+  artifacts:
+    paths:
+      - web-ext-artifacts/
+
+publish:
+  <<: *versiononly
+  stage: publish
+  dependencies:
+    - sign
   script:
     - mkdir -p ~/.ssh
     - chmod 0700 ~/.ssh

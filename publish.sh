@@ -1,15 +1,15 @@
 #!/bin/bash
 set -euo pipefail
 
-# Make sure there are web-artifacts
-ls web-ext-artifacts/*
+# Make sure there are signed web-artifacts
+ls web-ext-artifacts/*.xpi
 
-zipfile="$(ls web-ext-artifacts)"
+xpifile="$(ls web-ext-artifacts/*.xpi)"
 
 # Pin the extension to IPFS
 ssh -o StrictHostKeyChecking=no \
     -p "$PIN_SSH_PORT" \
     "$PIN_SSH_USER@$PIN_SSH_HOST" \
-    "$zipfile" < "web-ext-artifacts/$zipfile" | tee hash
+    "$xpifile" < "web-ext-artifacts/$xpifile" | tee hash
 
 
