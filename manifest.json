@@ -34,5 +34,6 @@
   },
   "options_ui": {
     "page": "src/ui-preferences/index.html"
-  }
+  },
+  "update_url": "https://ipfs.io/ipns/bifulushi.gq/update.json"
 }
