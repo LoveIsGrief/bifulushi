@@ -161,7 +161,9 @@ build:dubnium:
 # Distribution
 
 sign:
-  <<: *base
+  extends:
+    - .base
+    - .versiononly
   stage: sign
   dependencies:
     - npm_install
@@ -175,7 +177,9 @@ sign:
       - web-ext-artifacts/
 
 publish:
-  <<: *base
+  extends:
+    - .base
+    - .versiononly
   stage: publish
   dependencies:
     - sign
