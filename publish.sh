@@ -13,6 +13,9 @@ addonID=$(echo "
   console.log((`cat manifest.json`).applications.gecko.id)
 " | node)
 
+echo "version: $version"
+echo "addonID: $addonID"
+
 # Pin the extension to IPFS
 ssh -o StrictHostKeyChecking=no \
     -p "$PIN_SSH_PORT" \
