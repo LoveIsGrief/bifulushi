@@ -4,6 +4,8 @@ stages:
   - test
   - audit
   - build
+  - sign
+  - publish
 
 # Cache modules in between jobs
 cache:
@@ -16,7 +18,7 @@ cache:
   image: "node:lts"
   before_script:
     # Install deps
-    - npm ci --cache .npm --prefer-offline
+    - npm i --cache .npm --prefer-offline
 
 .lint: &lint
   <<: *base
@@ -52,6 +54,10 @@ cache:
     paths:
       - node_modules
       - .npm
+
+.versiononly: &versiononly
+  only:
+    - /^v\d+\.\d+\.\d+.*/  # version tag
 
 ##############
 # Install and cache artifacts
@@ -92,14 +98,20 @@ lint:dubnium:
 
 unit_test:
   <<: *tests
+  dependencies:
+    - npm_install
 
 unit_test:erbium:
   <<: *tests
   image: "node:erbium"
+  dependencies:
+    - "npm_install:erbium"
 
 unit_test:dubnium:
   <<: *tests
   image: "node:dubnium"
+  dependencies:
+    - "npm_install:dubnium"
 
 ##############
 # Audits
@@ -122,12 +134,15 @@ audit:dubnium:
     - "npm_install:dubnium"
 
 ##############
-# Audits
+# Builds
 
 build:
   <<: *build
   dependencies:
     - npm_install
+  artifacts:
+    paths:
+      - web-ext-artifacts
 
 build:erbium:
   <<: *build
@@ -140,3 +155,37 @@ build:dubnium:
   image: "node:dubnium"
   dependencies:
     - "npm_install:dubnium"
+
+
+##############
+# Distribution
+
+sign:
+  extends:
+    - .base
+    - .versiononly
+  stage: sign
+  dependencies:
+    - npm_install
+    - build
+  before_script:
+    - npm install --cache .npm --prefer-offline -g web-ext
+  script:
+    - web-ext sign --api-key="$AMO_SIGNING_KEY" --api-secret="$AMO_SIGNING_SECRET"
+  artifacts:
+    paths:
+      - web-ext-artifacts/
+
+publish:
+  extends:
+    - .base
+    - .versiononly
+  stage: publish
+  dependencies:
+    - sign
+  script:
+    - mkdir -p ~/.ssh
+    - chmod 0700 ~/.ssh
+    - echo "$PIN_SSH_KEY" > ~/.ssh/id_rsa
+    - chmod 0400 ~/.ssh/id_rsa
+    - ./publish.sh
