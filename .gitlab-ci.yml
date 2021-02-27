@@ -164,6 +164,7 @@ sign:
   <<: *versiononly
   stage: sign
   dependencies:
+    - npm_install
     - build
   script:
     - web-ext sign --api-key="$AMO_SIGNING_KEY" --api-secret="$AMO_SIGNING_SECRET"
