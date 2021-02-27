@@ -175,6 +175,7 @@ sign:
       - web-ext-artifacts/
 
 publish:
+  <<: *base
   stage: publish
   dependencies:
     - sign
