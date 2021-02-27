@@ -20,6 +20,6 @@ echo "addonID: $addonID"
 ssh -o StrictHostKeyChecking=no \
     -p "$PIN_SSH_PORT" \
     "$PIN_SSH_USER@$PIN_SSH_HOST" \
-    "$addonID" "$version" < "web-ext-artifacts/$xpifile" | tee hash
+    "$addonID" "$version" < "$xpifile" | tee hash
 
 
