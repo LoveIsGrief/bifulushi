@@ -12,10 +12,9 @@ Containerise hadn't been updated in a while so here's an attempt to continue the
 
 # Installation
 
-**Not yet available**
+Access the [XPI directly from IPFS.io][xpi]
 
-Install containerise for Firefox from [AMO](https://addons.mozilla.org/en-US/firefox/addon/containerise/)
- in the meantime.
+For an explanation why there isn't a Mozilla store link, scroll to the bottom.
 
 # Usage
 
@@ -58,4 +57,17 @@ Runs web-ext process to debug the extension on Firefox. See [web-ext docs](https
 To live reload the extension, start this process in a new tab after starting `npm run webpack` process.
 
 
+# Why the extension isn't on the Mozilla store
+
+As of 2021 February, Mozilla doesn't like extensions that allow JS `eval()` to run.
+Bifulushi executes `eval()` only within the options page in about:addons
+ but that didn't satisfy the reviewers, so they took down the extension.
+
+Since I didn't want to wait on Firefox to implement their [sandboxing feature] and use the extension myself,
+ the decision was made to self-publish.
+It ended up on [IPFS] simply because it was a fun, promising and educative enterprise.
+
 [containerise_git]: https://github.com/kintesh/containerise
+[IPFS]: https://ipfs.io
+[sandboxing feature]: https://developer.chrome.com/docs/extensions/mv3/manifest/sandbox/
+[xpi]: https://ipfs.io/ipfs/QmPpuzoYbrZtshr1voPpkL1d1P2QNZp4mLaL4w5JrEGTgb/files/1.0.0a.xpi
