@@ -57,7 +57,7 @@ cache:
 
 .versiononly: &versiononly
   only:
-    - /^v\d+\.\d+\..+/  # version tag
+    - /^v\d+\.\d+\.\d+.*/  # version tag
 
 ##############
 # Install and cache artifacts
